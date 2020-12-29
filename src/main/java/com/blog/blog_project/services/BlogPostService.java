@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.time.Instant.now;
+
 @Service
 public class BlogPostService {
     @Autowired
@@ -35,7 +37,7 @@ public class BlogPostService {
     public BlogPost updateBlogPost(BlogPost post, Long id){
         blogPostRepository.findById(id)
                 .map(b -> {b.setTitle(post.getTitle());
-                b.setTimestamp(post.getTimestamp());
+                b.setTimestamp(now());
                 b.setBlurb(post.getBlurb());
                 b.setFulltext(post.getFulltext());
                 b.setImagelink(post.getImagelink());
