@@ -18,6 +18,6 @@ public class Tag {
     private Long id;
     @Column(name = "TAG_NAME")
     private String tagName;
-    @ManyToMany(mappedBy = "BLOGPOST_ID")
+    @ManyToMany  //(mappedBy = "BLOGPOST_ID")
     private Set<BlogPost> blogPosts = new HashSet<>();
 }

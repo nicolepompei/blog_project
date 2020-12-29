@@ -21,7 +21,7 @@ public class BlogPostService {
 
 
     public List<BlogPost> getAllByTag(String tagName){
-        return blogPostRepository.findByTags_Name(tagName);
+        return blogPostRepository.findByTags_tagName(tagName);
     }
 
     public void deleteById(Long id){
