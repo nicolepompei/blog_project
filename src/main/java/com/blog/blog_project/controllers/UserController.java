@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,23 +23,24 @@ import java.util.List;
 public class UserController {
 
     private final Logger LOG =  LoggerFactory.getLogger(UserController.class);
+    @Autowired
     private final UserService userService;
 
     //======================== Create User ======================
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder){
+    public ResponseEntity<Void> createUser(@RequestBody User user){
         LOG.info("creating a user: {}", user);
         //no validation check for if a user already exists, this will happen with authentication
         userService.createUser(user);
-
+        UriComponentsBuilder ucBuilder = UriComponentsBuilder.newInstance();
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/person/{id}").buildAndExpand(user.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
     //==========================GET USER BY ID  =========================
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public ResponseEntity getUserById(@PathVariable("id") Long id){
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
         LOG.info("getting user with id: {}", id);
         User user = userService.findUserById(id);
 
@@ -51,20 +53,20 @@ public class UserController {
 
     //========================GET ALL USERS========================
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getUserList(){
+    public ResponseEntity<Iterable<User>> getUserList(){
         LOG.info("Getting all users");
         List<User> userList = userService.findAll();
         if(userList == null || userList.isEmpty()){
             LOG.info("no users found");
-            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Iterable<User>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
+        return new ResponseEntity<Iterable<User>>(userList, HttpStatus.OK);
     }
 
 
     //==================Get User By User Name ====================
     @RequestMapping(value = {"username"}, method = RequestMethod.GET)
-    public ResponseEntity getUserByUsername(@PathVariable("username") String username){
+    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username){
         LOG.info("getting user with username: {}", username);
 
         User user = userService.findByUsername(username);
@@ -76,6 +78,8 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    //findByEmail???????
+    /*
     //==================Get User By Email Address ====================
 
     //seems like a bad idea to expose a users email address as an endpoint...
@@ -91,6 +95,8 @@ public class UserController {
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
+
+     */
 
 
 }

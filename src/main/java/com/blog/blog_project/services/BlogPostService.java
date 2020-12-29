@@ -2,53 +2,54 @@ package com.blog.blog_project.services;
 
 
 import com.blog.blog_project.entities.BlogPost;
+import com.blog.blog_project.entities.User;
 import com.blog.blog_project.repositories.BlogPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlogPostService {
     @Autowired
     private BlogPostRepository blogPostRepository;
 
-    @Autowired
-    BlogPost blogPost;
-
-    public List<BlogPost> findAll(){
+    public List<BlogPost> getAll(){
         return blogPostRepository.findAll();
     }
 
 
-    public BlogPost FindAllByTag(String tagName){
-
-        return null;
+    public List<BlogPost> getAllByTag(String tagName){
+        return blogPostRepository.findByTags_Name(tagName);
     }
 
-    public void deleteByID(Long id){
-        blogPostRepository.delete(id);
+    public void deleteById(Long id){
+        blogPostRepository.deleteById(id);
     }
-
 
     public BlogPost createBlogPost(BlogPost blogPost){
         return blogPostRepository.save(blogPost);
     }
 
-    public BlogPost updateBlogPost(BlogPost post){
-        return blogPostRepository.save(post);
-
-
+    public BlogPost updateBlogPost(BlogPost post, Long id){
+        blogPostRepository.findById(id)
+                .map(b -> {b.setTitle(post.getTitle());
+                b.setTimestamp(post.getTimestamp());
+                b.setBlurb(post.getBlurb());
+                b.setFulltext(post.getFulltext());
+                b.setImagelink(post.getImagelink());
+                return blogPostRepository.save(b);
+                });
+        return blogPostRepository.findById(id).orElseThrow(RuntimeException::new);
     }
-    public BlogPost findAllById(Long userID){
-        return null;
+
+    public List<BlogPost> getAllById(Long userID){
+        return blogPostRepository.findByUser_Id(userID);
     }
-    public BlogPost findAllByUsername(String username){
-        return null;
-    }
-
-
-
-
+    //TODO In case we want to allow users to search by username
+//    public List<BlogPost> findAllByUsername(String username){
+//        return blogPostRepository.findAllByUsername(username);
+//    }
 
 }

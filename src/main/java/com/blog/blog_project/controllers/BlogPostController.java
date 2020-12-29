@@ -23,7 +23,7 @@ public class BlogPostController {
 
     @GetMapping("/blog/tag/{tag}")
     public ResponseEntity<Iterable<BlogPost>> getAllByTag(@PathVariable String tag){
-        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllByTag(tag), HttpStatus.OK);
+        return new ResponseEntity<>(blogPostService.getAllByTag(tag), HttpStatus.OK);
     }
 
     @GetMapping("/blog/id/{id}")
@@ -31,24 +31,27 @@ public class BlogPostController {
         return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/blog/userName/{userName}")
-    public ResponseEntity<Iterable<BlogPost>> getAllByUserName(@PathVariable String userName){
-        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllByUserName(userName), HttpStatus.OK);
-    }
+
 
     @DeleteMapping("/blog/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable Long id){
-        return new ResponseEntity<Boolean>(blogPostService.deleteById(id),HttpStatus.OK);
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+        blogPostService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/blog/")
     public ResponseEntity<BlogPost> createBlogPost(@RequestBody BlogPost blogPost){
-        return new ResponseEntity<BlogPost>(blogPostService.createBlogPost(blogPost),HttpStatus.OK);
+        return new ResponseEntity<BlogPost>(blogPostService.createBlogPost(blogPost),HttpStatus.CREATED);
     }
 
     @PutMapping("/blog/{id}")
     public ResponseEntity<BlogPost> updateBlogPost(@PathVariable Long id,@RequestBody BlogPost blogPost){
-        return new ResponseEntity<BlogPost>(blogPostService.updateBlogPost(id,blogPost),HttpStatus.OK);
+        return new ResponseEntity<BlogPost>(blogPostService.updateBlogPost(blogPost, id),HttpStatus.OK);
     }
 
+
+//    @GetMapping("/blog/userName/{userName}")
+//    public ResponseEntity<Iterable<BlogPost>> getAllByUserName(@PathVariable String userName){
+//        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllByUserName(userName), HttpStatus.OK);
+//    }
 }
