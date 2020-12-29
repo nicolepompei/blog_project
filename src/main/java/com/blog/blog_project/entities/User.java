@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USERS")
+//@Table(name = "USERS")
 public class User {
 
     @Id
@@ -38,7 +38,7 @@ public class User {
     private Instant timestamp;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+//    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @Column(name = "BLOGPOSTS")
     private List<BlogPost> blogPosts = new ArrayList<>();
 }

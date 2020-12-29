@@ -10,7 +10,7 @@ import java.util.List;
 public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
     public List<BlogPost> findByUser_Id(Long userId);
     //How is this going to work?
-    public List<BlogPost> findByTags_Name(String tagName);
+    public List<BlogPost> findByTags_tagName(String tagName);
 
     public List<BlogPost> findAllByUsername(String Username);
 }

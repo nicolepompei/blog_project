@@ -31,12 +31,11 @@ public class BlogPost {
     private String imagelink;
 
     @ManyToMany
-    @JoinTable(name="BLOGPOST_TAG",
-            joinColumns = @JoinColumn(name = "BLOG_ID", referencedColumnName = "BLOGPOST_ID"),
-    inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "BLOGPOST_ID"))
+//    @JoinTable(name="BLOGPOST_TAG",
+//            joinColumns = @JoinColumn(name = "BLOG_ID", referencedColumnName = "BLOGPOST_ID"),
+//    inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "BLOGPOST_ID"))
     private Set<Tag> tags;
 
     @ManyToOne
-    @Column(name = "USER")
     private User user;
 }
