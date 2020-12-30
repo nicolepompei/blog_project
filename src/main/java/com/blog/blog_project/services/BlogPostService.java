@@ -2,8 +2,10 @@ package com.blog.blog_project.services;
 
 
 import com.blog.blog_project.entities.BlogPost;
+import com.blog.blog_project.entities.Tag;
 import com.blog.blog_project.entities.User;
 import com.blog.blog_project.repositories.BlogPostRepository;
+import com.blog.blog_project.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ import java.util.Optional;
 public class BlogPostService {
     @Autowired
     private BlogPostRepository blogPostRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     public List<BlogPost> getAll(){
         return blogPostRepository.findAll();
@@ -29,6 +34,9 @@ public class BlogPostService {
     }
 
     public BlogPost createBlogPost(BlogPost blogPost){
+        for (Tag t : blogPost.getTags()){
+            tagRepository.save(t);
+        }
         return blogPostRepository.save(blogPost);
     }
 
