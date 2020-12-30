@@ -26,15 +26,9 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        User newUser = new User();
-        newUser.setUsername((user.getUsername()));
-        newUser.setEmail((user.getEmail()));
-        newUser.setPassword(user.getPassword());
-        newUser.setTimestamp(now());
-
-        userRepository.save(newUser);
+        userRepository.save(user);
         log.info("User Registered Successfully, Sending Authentication Email");
-        return newUser;
+        return user;
     }
 
 
