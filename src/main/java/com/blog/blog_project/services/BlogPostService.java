@@ -3,15 +3,12 @@ package com.blog.blog_project.services;
 
 import com.blog.blog_project.entities.BlogPost;
 import com.blog.blog_project.entities.Tag;
-import com.blog.blog_project.entities.User;
 import com.blog.blog_project.repositories.BlogPostRepository;
 import com.blog.blog_project.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BlogPostService {
@@ -49,7 +46,8 @@ public class BlogPostService {
     public BlogPost updateBlogPost(BlogPost post, Long id){
         blogPostRepository.findById(id)
                 .map(b -> {b.setTitle(post.getTitle());
-                b.setTimestamp(post.getTimestamp());
+//                b.setCreationTimestamp(post.getCreationTimestamp()); Do we need these? Will hibernate handle it itself?
+//                b.setUpdateTimestamp();
                 b.setBlurb(post.getBlurb());
                 b.setFulltext(post.getFulltext());
                 b.setImagelink(post.getImagelink());

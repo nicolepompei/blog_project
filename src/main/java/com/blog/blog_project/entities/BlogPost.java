@@ -1,14 +1,14 @@
 package com.blog.blog_project.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -22,8 +22,12 @@ public class BlogPost {
     private Long id;
     @Column(name = "TITLE")
     private String title;
+    @CreationTimestamp
     @Column(name = "TIMESTAMP")
-    private Instant timestamp;
+    private LocalDateTime creationTimestamp;
+    @UpdateTimestamp
+    @Column(name = "UPDATETIMESTAMP")
+    private LocalDateTime updateTimestamp;
     @Column(name = "BLURB")
     private String blurb;
     @Column(name = "FULLTEXT")
