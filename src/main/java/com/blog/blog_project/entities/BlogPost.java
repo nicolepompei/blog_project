@@ -30,7 +30,8 @@ public class BlogPost {
     private LocalDateTime updateTimestamp;
     @Column(name = "BLURB")
     private String blurb;
-    @Column(name = "FULLTEXT")
+    @Column(name = "FULLTEXT", columnDefinition = "CLOB NOT NULL")
+    @Lob
     private String fulltext;
     @Column(name = "USERNAME")
     private String username;
