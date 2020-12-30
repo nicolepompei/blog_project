@@ -39,7 +39,7 @@ public class UserController {
     }
 
     //==========================GET USER BY ID  =========================
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
         LOG.info("getting user with id: {}", id);
         User user = userService.findUserById(id);
@@ -65,7 +65,7 @@ public class UserController {
 
 
     //==================Get User By User Name ====================
-    @RequestMapping(value = {"username"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/username/{username}"}, method = RequestMethod.GET)
     public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username){
         LOG.info("getting user with username: {}", username);
 

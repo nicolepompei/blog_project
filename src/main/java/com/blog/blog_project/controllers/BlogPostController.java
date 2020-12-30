@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+@RequestMapping("/posts")
 @RestController
 public class BlogPostController {
     private BlogPostService blogPostService;
@@ -18,35 +18,35 @@ public class BlogPostController {
     }
 
 
-    @GetMapping("/blog/getall")
+    @GetMapping
     public ResponseEntity<Iterable<BlogPost>> getAll(){
         return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/blog/tag/{tag}")
+    @GetMapping("/{tag}")
     public ResponseEntity<Iterable<BlogPost>> getAllByTag(@PathVariable String tag){
         return new ResponseEntity<>(blogPostService.getAllByTag(tag), HttpStatus.OK);
     }
 
-    @GetMapping("/blog/id/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Iterable<BlogPost>> getAllById(@PathVariable Long id){
         return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllById(id), HttpStatus.OK);
     }
 
 
 
-    @DeleteMapping("/blog/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
         blogPostService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/blog/")
+    @PostMapping
     public ResponseEntity<BlogPost> createBlogPost(@RequestBody BlogPost blogPost){
         return new ResponseEntity<BlogPost>(blogPostService.createBlogPost(blogPost),HttpStatus.CREATED);
     }
 
-    @PutMapping("/blog/{id}")
+    @PutMapping("/id/{id}")
     public ResponseEntity<BlogPost> updateBlogPost(@PathVariable Long id,@RequestBody BlogPost blogPost){
         return new ResponseEntity<BlogPost>(blogPostService.updateBlogPost(blogPost, id),HttpStatus.OK);
     }
