@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.Set;
 
+import static javax.persistence.FetchType.*;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,6 +38,7 @@ public class BlogPost {
 //    inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "BLOGPOST_ID"))
     private Set<Tag> tags;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
 }

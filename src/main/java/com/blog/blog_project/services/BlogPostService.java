@@ -4,6 +4,7 @@ package com.blog.blog_project.services;
 import com.blog.blog_project.entities.BlogPost;
 import com.blog.blog_project.entities.User;
 import com.blog.blog_project.repositories.BlogPostRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 import static java.time.Instant.now;
 
 @Service
+@Slf4j
 public class BlogPostService {
     @Autowired
     private BlogPostRepository blogPostRepository;
@@ -31,7 +33,18 @@ public class BlogPostService {
     }
 
     public BlogPost createBlogPost(BlogPost blogPost){
-        return blogPostRepository.save(blogPost);
+        BlogPost newBlogPost = new BlogPost();
+        newBlogPost.setTitle(blogPost.getTitle());
+        newBlogPost.setBlurb(blogPost.getBlurb());
+        newBlogPost.setImagelink(blogPost.getImagelink());
+        newBlogPost.setFulltext(blogPost.getFulltext());
+        newBlogPost.setTimestamp(now());
+        newBlogPost.setUsername(blogPost.getUsername());
+        //newBlogPost.getUser().getId();
+
+        blogPostRepository.save(newBlogPost);
+        log.info("Blog created successfully, sending email");
+        return newBlogPost;
     }
 
     public BlogPost updateBlogPost(BlogPost post, Long id){
