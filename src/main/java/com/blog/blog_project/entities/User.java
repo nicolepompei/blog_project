@@ -3,9 +3,10 @@ package com.blog.blog_project.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private Long id;
-
     @Column(name = "USERNAME", unique = true)
 //    @NotBlank(message = "Username is required")
     private String username;
@@ -34,8 +34,9 @@ public class User {
 //    @NotEmpty(message = "Email is required")
     private String email;
 
+    @CreationTimestamp
     @Column(name = "TIMESTAMP")
-    private Instant timestamp;
+    private LocalDateTime timestamp;
 
     @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
