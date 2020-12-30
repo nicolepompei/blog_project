@@ -2,22 +2,25 @@ package com.blog.blog_project.services;
 
 
 import com.blog.blog_project.entities.BlogPost;
-import com.blog.blog_project.entities.User;
+import com.blog.blog_project.entities.Tag;
 import com.blog.blog_project.repositories.BlogPostRepository;
-import lombok.extern.slf4j.Slf4j;
+import com.blog.blog_project.repositories.TagRepository;
+import com.blog.blog_project.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-
-import static java.time.Instant.now;
 
 @Service
-@Slf4j
 public class BlogPostService {
     @Autowired
     private BlogPostRepository blogPostRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<BlogPost> getAll(){
         return blogPostRepository.findAll();
@@ -32,25 +35,24 @@ public class BlogPostService {
         blogPostRepository.deleteById(id);
     }
 
+    //we can't NOT save the tag (or can we?) and if we don't do this we'll have duplicate tags.
+    //Here is a workaround.
     public BlogPost createBlogPost(BlogPost blogPost){
-        BlogPost newBlogPost = new BlogPost();
-        newBlogPost.setTitle(blogPost.getTitle());
-        newBlogPost.setBlurb(blogPost.getBlurb());
-        newBlogPost.setImagelink(blogPost.getImagelink());
-        newBlogPost.setFulltext(blogPost.getFulltext());
-        newBlogPost.setTimestamp(now());
-        newBlogPost.setUsername(blogPost.getUsername());
-        //newBlogPost.getUser().getId();
-
-        blogPostRepository.save(newBlogPost);
-        log.info("Blog created successfully, sending email");
-        return newBlogPost;
+        for (Tag t : blogPost.getTags()) {
+            if (tagRepository.existsByTagName(t.getTagName())) {
+                t.setId(tagRepository.findByTagName(t.getTagName()).getId());
+            }
+            tagRepository.save(t);
+        }
+        blogPost.setUser(userRepository.findByUsername(blogPost.getUsername()).get()); // this
+        return blogPostRepository.save(blogPost);
     }
 
     public BlogPost updateBlogPost(BlogPost post, Long id){
         blogPostRepository.findById(id)
                 .map(b -> {b.setTitle(post.getTitle());
-                b.setTimestamp(now());
+//                b.setCreationTimestamp(post.getCreationTimestamp()); Do we need these? Will hibernate handle it itself?
+//                b.setUpdateTimestamp();
                 b.setBlurb(post.getBlurb());
                 b.setFulltext(post.getFulltext());
                 b.setImagelink(post.getImagelink());
