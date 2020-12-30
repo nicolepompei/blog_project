@@ -48,6 +48,6 @@ public class BlogPost {
     @JsonIgnoreProperties("blogPosts")
     private Set<Tag> tags;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 }

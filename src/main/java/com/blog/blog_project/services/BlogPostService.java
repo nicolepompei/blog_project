@@ -5,6 +5,7 @@ import com.blog.blog_project.entities.BlogPost;
 import com.blog.blog_project.entities.Tag;
 import com.blog.blog_project.repositories.BlogPostRepository;
 import com.blog.blog_project.repositories.TagRepository;
+import com.blog.blog_project.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class BlogPostService {
 
     @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<BlogPost> getAll(){
         return blogPostRepository.findAll();
@@ -40,6 +44,7 @@ public class BlogPostService {
             }
             tagRepository.save(t);
         }
+        blogPost.setUser(userRepository.findByUsername(blogPost.getUsername()).get()); // this
         return blogPostRepository.save(blogPost);
     }
 
