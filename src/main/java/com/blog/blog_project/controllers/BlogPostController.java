@@ -2,6 +2,7 @@ package com.blog.blog_project.controllers;
 
 
 import com.blog.blog_project.entities.BlogPost;
+import com.blog.blog_project.repositories.TagRepository;
 import com.blog.blog_project.services.BlogPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ public class BlogPostController {
     public BlogPostController(BlogPostService blogPostService){
         this.blogPostService = blogPostService;
     }
+
 
     @GetMapping("/blog/getall")
     public ResponseEntity<Iterable<BlogPost>> getAll(){

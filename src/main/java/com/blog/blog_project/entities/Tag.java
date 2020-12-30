@@ -1,4 +1,8 @@
 package com.blog.blog_project.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +22,9 @@ public class Tag {
     private Long id;
     @Column(name = "TAG_NAME")
     private String tagName;
-    @ManyToMany  //(mappedBy = "BLOGPOST_ID")
+
+    @ManyToMany//(mappedBy = "tags")
+    //@JsonBackReference // see comment in BlogPost
+    @JsonIgnoreProperties("tags")
     private Set<BlogPost> blogPosts = new HashSet<>();
 }
