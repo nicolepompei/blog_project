@@ -7,6 +7,7 @@ import com.blog.blog_project.entities.User;
 import com.blog.blog_project.repositories.BlogPostRepository;
 import com.blog.blog_project.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +34,13 @@ public class BlogPostService {
         blogPostRepository.deleteById(id);
     }
 
+    //we can't NOT save the tag (or can we?) and if we don't do this we'll have duplicate tags.
+    //Here is a workaround.
     public BlogPost createBlogPost(BlogPost blogPost){
-        for (Tag t : blogPost.getTags()){
+        for (Tag t : blogPost.getTags()) {
+            if (tagRepository.existsByTagName(t.getTagName())) {
+                t.setId(tagRepository.findByTagName(t.getTagName()).getId());
+            }
             tagRepository.save(t);
         }
         return blogPostRepository.save(blogPost);
