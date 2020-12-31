@@ -76,12 +76,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.11.928</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.security</groupId>-->
 <!--            <artifactId>spring-security-test</artifactId>-->
 <!--            <scope>test</scope>-->
 <!--        </dependency>-->
     </dependencies>
+
 
     <build>
         <plugins>
@@ -98,6 +105,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>blog-project-exe</finalName>
     </build>
 
     <repositories>
