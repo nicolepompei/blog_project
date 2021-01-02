@@ -15,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "BLOG_POSTS")
 public class BlogPost {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
