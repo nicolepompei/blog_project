@@ -11,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class JwtResponse {
-    private String token;
+    private String authenticationToken;
+    private String refreshToken;
     private String type = "Bearer";
     private Long id;
     private String username;

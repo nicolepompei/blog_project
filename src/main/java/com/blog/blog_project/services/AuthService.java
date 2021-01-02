@@ -1,11 +1,14 @@
 package com.blog.blog_project.services;
 
 import com.blog.blog_project.entities.User;
+import com.blog.blog_project.entities.VerificationToken;
+import com.blog.blog_project.exceptions.ZcwBlogException;
 import com.blog.blog_project.payload.request.LoginRequest;
 import com.blog.blog_project.payload.request.SignupRequest;
 import com.blog.blog_project.payload.response.JwtResponse;
 import com.blog.blog_project.payload.response.MessageResponse;
 import com.blog.blog_project.repositories.UserRepository;
+import com.blog.blog_project.repositories.VerificationTokenRepository;
 import com.blog.blog_project.security.jwt.JwtUtils;
 import com.blog.blog_project.security.services.UserDetailsImpl;
 import lombok.AllArgsConstructor;
@@ -22,6 +25,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.UUID;
+
 import static org.springframework.http.ResponseEntity.*;
 
 @Service
@@ -37,9 +42,6 @@ public class AuthService {
     private UserRepository userRepository;
 
     @Autowired
-    private VerificationTokenRepository verificationTokenRepository;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -48,33 +50,45 @@ public class AuthService {
     @Autowired
     private RefreshTokenService refreshTokenService;
 
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
 
 
-    public ResponseEntity<MessageResponse> signup (SignupRequest signupRequest) throws ZcwBlogException{
+
+    public MessageResponse signup (SignupRequest signupRequest) throws ZcwBlogException{
         if(userRepository.existsByUsername(signupRequest.getUsername())){
-            return badRequest()
-                    .body( new MessageResponse("Error: Username is already taken!"));
+            return ( new MessageResponse("Error: Username is already taken!"));
         }
 
         if(userRepository.existsByEmail(signupRequest.getEmail())){
-            return badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+            return (new MessageResponse("Error: Email is already in use!"));
         }
 
         User user = new User();
         user.setUsername((signupRequest.getUsername()));
-        user.setEmail((signupRequest.getEmail());
+        user.setEmail((signupRequest.getEmail()));
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         //user.setTimestamp(new LocalDateTime()); dont think this is needed
 
         userRepository.save(user);
 
         log.info("User Registered Successfully!");
+        String token = generateVerificationToken(user);
 
-        return new ResponseEntity<MessageResponse>(new MessageResponse("User successfully Created!"), HttpStatus.CREATED);
+        return (new MessageResponse("User successfully Created!"));
     }
 
-    public JwtResponse login(LoginRequest loginRequest) throws ZcwBlogException{
+    private String generateVerificationToken(User user) {
+        String token = UUID.randomUUID().toString();
+        VerificationToken verificationToken = new VerificationToken();
+        verificationToken.setToken(token);
+        verificationToken.setUser(user);
+
+        verificationTokenRepository.save(verificationToken);
+        return token;
+    }
+
+    public JwtResponse login(LoginRequest loginRequest) throws ZcwBlogException {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword()));

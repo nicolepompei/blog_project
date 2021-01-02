@@ -1,12 +1,15 @@
 package com.blog.blog_project.controllers;
 
+import com.blog.blog_project.exceptions.ZcwBlogException;
 import com.blog.blog_project.payload.request.LoginRequest;
+import com.blog.blog_project.payload.request.RefreshTokenRequest;
 import com.blog.blog_project.payload.request.SignupRequest;
 import com.blog.blog_project.payload.response.JwtResponse;
 import com.blog.blog_project.payload.response.MessageResponse;
 import com.blog.blog_project.repositories.UserRepository;
 import com.blog.blog_project.security.jwt.JwtUtils;
 import com.blog.blog_project.services.AuthService;
+import com.blog.blog_project.services.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +32,13 @@ public class AuthController {
     AuthService authService;
 
     @Autowired
-    RefreshTokenRequest refreshTokenRequest;
+    RefreshTokenService refreshTokenService;
+
 
 
 
     @PostMapping("signup")
-    public ResponseEntity<?> signUp(@RequestBody SignupRequest signupRequest) throws ZCWBlogException{
+    public ResponseEntity<?> signUp(@RequestBody SignupRequest signupRequest) throws ZcwBlogException {
         authService.signup(signupRequest);
         return new ResponseEntity<>("User Registration Successful", HttpStatus.CREATED);
     }
@@ -49,15 +53,15 @@ public class AuthController {
      * @return
      */
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
+    public ResponseEntity<String> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ZcwBlogException{
         authService.login(loginRequest);
         return new ResponseEntity<>("User Authentication Successful!", HttpStatus.OK);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest){
-        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken()):
-        return ResponseEntity.status(HttpStatus.ok)).body("Refresh Token Deleted Successfully!");
+    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
+        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+        return new ResponseEntity<>("Refresh Token Deleted Successfully!", HttpStatus.OK);
     }
 
 }
