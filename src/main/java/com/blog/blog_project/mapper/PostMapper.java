@@ -23,14 +23,15 @@ public class  PostMapper {
         BlogPostBuilder blogPost = BlogPost.builder();
 
         if( postRequest != null){
+            blogPost.id(postRequest.getPostId());
             blogPost.title(postRequest.getTitle());
             blogPost.blurb(postRequest.getBlurb());
-            blogPost.fulltext(postRequest.getFullText());
-            blogPost.tags(postRequest.getTags());
-            blogPost.imagelink(postRequest.getImageLink());
-            blogPost.username(postRequest.getUserName());
+            blogPost.fulltext(postRequest.getFulltext());
+           // blogPost.tags(postRequest.getTags());
+            blogPost.imagelink(postRequest.getImagelink());
+            blogPost.username(postRequest.getUsername());
         }
-
+        blogPost.user(user);
         blogPost.creationTimestamp(LocalDateTime.now());
 
         return blogPost.build();

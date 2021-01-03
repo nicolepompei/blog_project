@@ -12,6 +12,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -53,12 +55,13 @@ public class BlogPost {
     // https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue/39573255#39573255
     @ManyToMany
     @JoinTable(name="BLOGPOST_TAG",
-            joinColumns = @JoinColumn(name = "BLOG_ID", referencedColumnName = "BLOGPOST_ID"))
-   // inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "BLOG_ID", referencedColumnName = "BLOGPOST_ID"),
+   inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "id"))
     //@JsonManagedReference
     @JsonIgnoreProperties("blogPosts")
     private Set<Tag> tags;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
 }
