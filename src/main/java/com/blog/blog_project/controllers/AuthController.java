@@ -4,6 +4,7 @@ import com.blog.blog_project.exceptions.ZcwBlogException;
 import com.blog.blog_project.payload.request.LoginRequest;
 import com.blog.blog_project.payload.request.RefreshTokenRequest;
 import com.blog.blog_project.payload.request.SignupRequest;
+import com.blog.blog_project.payload.response.AuthenticationResponse;
 import com.blog.blog_project.payload.response.JwtResponse;
 import com.blog.blog_project.payload.response.MessageResponse;
 import com.blog.blog_project.repositories.UserRepository;
@@ -37,8 +38,8 @@ public class AuthController {
 
 
 
-    @PostMapping("signup")
-    public ResponseEntity<?> signUp(@RequestBody SignupRequest signupRequest) throws ZcwBlogException {
+    @PostMapping("/signup")
+    public ResponseEntity<String> signUp(@RequestBody SignupRequest signupRequest) throws ZcwBlogException {
         authService.signup(signupRequest);
         return new ResponseEntity<>("User Registration Successful", HttpStatus.CREATED);
     }
@@ -53,15 +54,19 @@ public class AuthController {
      * @return
      */
     @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ZcwBlogException{
-        authService.login(loginRequest);
-        return new ResponseEntity<>("User Authentication Successful!", HttpStatus.OK);
+    public AuthenticationResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ZcwBlogException{
+       return authService.login(loginRequest);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return new ResponseEntity<>("Refresh Token Deleted Successfully!", HttpStatus.OK);
+    }
+
+    @PostMapping("/refresh/token")
+    public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws  ZcwBlogException {
+        return authService.refreshToken(refreshTokenRequest);
     }
 
 }

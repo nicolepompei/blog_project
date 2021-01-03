@@ -4,7 +4,9 @@ import com.blog.blog_project.entities.User;
 import com.blog.blog_project.entities.VerificationToken;
 import com.blog.blog_project.exceptions.ZcwBlogException;
 import com.blog.blog_project.payload.request.LoginRequest;
+import com.blog.blog_project.payload.request.RefreshTokenRequest;
 import com.blog.blog_project.payload.request.SignupRequest;
+import com.blog.blog_project.payload.response.AuthenticationResponse;
 import com.blog.blog_project.payload.response.JwtResponse;
 import com.blog.blog_project.payload.response.MessageResponse;
 import com.blog.blog_project.repositories.UserRepository;
@@ -20,11 +22,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -55,13 +61,18 @@ public class AuthService {
 
 
 
-    public MessageResponse signup (SignupRequest signupRequest) throws ZcwBlogException{
+    public ResponseEntity<?> signup (SignupRequest signupRequest) throws ZcwBlogException{
         if(userRepository.existsByUsername(signupRequest.getUsername())){
-            return ( new MessageResponse("Error: Username is already taken!"));
+            return ResponseEntity
+                    .badRequest()
+                    .body((new MessageResponse("Error: Username is already taken!")));
+
         }
 
         if(userRepository.existsByEmail(signupRequest.getEmail())){
-            return (new MessageResponse("Error: Email is already in use!"));
+            return ResponseEntity
+                    .badRequest()
+                    .body(((new MessageResponse("Error: Email is already in use!"))));
         }
 
         User user = new User();
@@ -75,7 +86,7 @@ public class AuthService {
         log.info("User Registered Successfully!");
         String token = generateVerificationToken(user);
 
-        return (new MessageResponse("User successfully Created!"));
+        return ResponseEntity.ok(new MessageResponse("User successfully Created!"));
     }
 
     private String generateVerificationToken(User user) {
@@ -88,23 +99,41 @@ public class AuthService {
         return token;
     }
 
-    public JwtResponse login(LoginRequest loginRequest) throws ZcwBlogException {
+    public AuthenticationResponse login(LoginRequest loginRequest) throws ZcwBlogException {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authenticate);
-        String jwt = jwtUtils.generateJwtToken(authenticate);
+        String token = jwtUtils.generateJwtToken(authenticate);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authenticate.getPrincipal();
+        return AuthenticationResponse.builder()
+                    .authenticationToken(token)
+                    .refreshToken(refreshTokenService.generateRefreshToken().getToken())
+                    .expiresAt(Instant.now().plusMillis(jwtUtils.getJwtExpirationMs()))
+                    .username(loginRequest.getUsername())
+                    .build();
+    }
 
-        JwtResponse jwtResponse = JwtResponse.builder()
-                            .token(jwt)
-                            .id(userDetails.getId())
-                            .username(userDetails.getUsername())
-                            .email(userDetails.getEmail())
-                            .build();
-        return jwtResponse;
+    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
+        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+        String token = jwtUtils.generateTokenWithUserName(refreshTokenRequest.getUsername());
+            return AuthenticationResponse.builder()
+                    .authenticationToken(token)
+                    .refreshToken(refreshTokenRequest.getRefreshToken())
+
+                    .expiresAt(Instant.now().plusMillis(jwtUtils.getJwtExpirationMs()))
+                    .username(refreshTokenRequest.getUsername())
+                    .build();
+    }
+
+    //use this for blog post service
+    @Transactional
+    public User getCurrentUser(){
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        return userRepository.findByUsername(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found - " + principal.getUsername()));
     }
 
 

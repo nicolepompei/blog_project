@@ -46,11 +46,11 @@ public class User {
     @Column(name = "TIMESTAMP")
     private LocalDateTime timestamp;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable( name = "BLOG_POSTS",
-                joinColumns = @JoinColumn(name = "USER_ID"),
-                inverseJoinColumns = @JoinColumn(name = "BLOGPOST_ID"))
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinTable( name = "BLOG_POSTS",
+//                joinColumns = @JoinColumn(name = "USER_ID"),
+//                inverseJoinColumns = @JoinColumn(name = "BLOGPOST_ID"))
 //    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
    // @Column(name = "BLOGPOSTS")
-    private List<BlogPost> blogPosts = new ArrayList<>();
+//    private List<BlogPost> blogPosts = new ArrayList<>();
 }
