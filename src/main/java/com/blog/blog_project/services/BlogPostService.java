@@ -55,8 +55,6 @@ public class BlogPostService {
         return blogPostRepository.save(blogPost);
     }
 
-  //re-qork these methods to take in a blog post resquest and return a blog post response
-
 
     //figure out how to map this to go from a BlogPost Request to a Blog Post Response
     public BlogPost updateBlogPost(BlogPost post, Long id){
@@ -70,19 +68,15 @@ public class BlogPostService {
                 b.setTags(post.getTags());
                 return blogPostRepository.save(b);
                 });
-        BlogPost postResponse = blogPostRepository.findById(id)
-                .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
-       // return blogPostRepository.findById(id).orElseThrow(RuntimeException::new);
-
-        return postResponse;
+       return blogPostRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
 //    public List<BlogPost> getAllById(Long userID){
 //        return blogPostRepository.findByUser_Id(userID);
 //    }
     //TODO In case we want to allow users to search by username
-//    public List<BlogPost> findAllByUsername(String username){
-//        return blogPostRepository.findAllByUsername(username);
-//    }
+    public List<BlogPost> findAllByUsername(String username){
+        return blogPostRepository.findAllByUsername(username);
+    }
 
 }
