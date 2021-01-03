@@ -2,6 +2,7 @@ package com.blog.blog_project.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "BLOG_POSTS")
 public class BlogPost {
     @Id
@@ -57,6 +59,6 @@ public class BlogPost {
     @JsonIgnoreProperties("blogPosts")
     private Set<Tag> tags;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private User user;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private User user;
 }

@@ -41,6 +41,8 @@ public class BlogPostService {
         blogPostRepository.deleteById(id);
     }
 
+
+
     //we can't NOT save the tag (or can we?) and if we don't do this we'll have duplicate tags.
     //Here is a workaround.
     public BlogPost createBlogPost(BlogPost blogPost){
