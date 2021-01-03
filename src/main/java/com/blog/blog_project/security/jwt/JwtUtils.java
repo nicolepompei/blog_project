@@ -26,7 +26,7 @@ public class JwtUtils {
     @Value("zcwSecretKey")
     private String jwtSecret;
 
-    @Value("86400000")
+    @Value("900000")
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication){
@@ -34,8 +34,8 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setIssuedAt(from(Instant.now()))
+                .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationMs)))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

@@ -2,6 +2,7 @@ package com.blog.blog_project.mapper;
 
 import com.blog.blog_project.entities.BlogPost;
 import com.blog.blog_project.entities.BlogPost.BlogPostBuilder;
+import com.blog.blog_project.entities.Tag;
 import com.blog.blog_project.entities.User;
 import com.blog.blog_project.payload.request.PostRequest;
 import com.blog.blog_project.payload.response.PostResponse;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Component
 public class  PostMapper {
@@ -27,13 +29,12 @@ public class  PostMapper {
             blogPost.title(postRequest.getTitle());
             blogPost.blurb(postRequest.getBlurb());
             blogPost.fulltext(postRequest.getFulltext());
-           // blogPost.tags(postRequest.getTags());
+            blogPost.tags(postRequest.getTags());
             blogPost.imagelink(postRequest.getImagelink());
             blogPost.username(postRequest.getUsername());
         }
         blogPost.user(user);
         blogPost.creationTimestamp(LocalDateTime.now());
-
         return blogPost.build();
     }
 

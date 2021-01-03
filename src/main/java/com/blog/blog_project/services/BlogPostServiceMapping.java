@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -96,12 +97,15 @@ public class BlogPostServiceMapping {
      */
 
     public void createBlogPost(PostRequest postRequest){
+
         for (Tag t : postRequest.getTags()) {
             if (tagRepository.existsByTagName(t.getTagName())) {
                 t.setId(tagRepository.findByTagName(t.getTagName()).getId());
             }
             tagRepository.save(t);
         }
+
+
         blogPostRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));
     }
 
