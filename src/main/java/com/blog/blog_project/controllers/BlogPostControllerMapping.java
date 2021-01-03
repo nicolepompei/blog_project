@@ -90,13 +90,12 @@ public class BlogPostControllerMapping {
 
     /**
      * ///////////////////////////////////// UPDATE POSTS BY USERNAME ///////////////////////////////////////
-     * @param
-     * @return
+     * Commenting this out for now as it is not apart of the MVP.
      */
-    @PutMapping("/id/{id}")
-    public ResponseEntity<PostResponse> updateBlogPost(@PathVariable Long id, @RequestBody PostRequest postRequest){
-        return status(HttpStatus.OK).body(blogPostService.updateBlogPost(postRequest, id));
-    }
+//    @PutMapping("/id/{id}")
+//    public ResponseEntity<PostResponse> updateBlogPost(@PathVariable Long id, @RequestBody PostRequest postRequest){
+//        return status(HttpStatus.OK).body(blogPostService.updateBlogPost(postRequest, id));
+//    }
 
     /**
      * ///////////////////////////////////// GET ALL BLOG POSTS BY USERNAME ///////////////////////////////////////

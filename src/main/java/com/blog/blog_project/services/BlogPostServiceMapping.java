@@ -111,28 +111,30 @@ public class BlogPostServiceMapping {
      *  figure out how to map this to go from a BlogPost Request to a Blog Post Response
      *   when you're updating a post, you've already clicked on it therefore you've gotten it by its id already, so now you're updating the contents
      *   of THAT specific post
+     *
+     *   COMMENTING OUT FOR NOW AS IT IS NOT PART OF THE MVP
      */
 
-    public PostResponse updateBlogPost(PostRequest postRequest){
-//        BlogPost blogPostToUpdate = blogPostRepository.findById(id)
-//                .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
+//    public PostResponse updateBlogPost(PostRequest postRequest){
+////        BlogPost blogPostToUpdate = blogPostRepository.findById(id)
+////                .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
+////
+////        return postMapper.maptToDto(postRequest, blogPostToUpdate);
 //
-//        return postMapper.maptToDto(postRequest, blogPostToUpdate);
-
-       // blogPostRepository.findById(id)
-
-//                .map(b -> {b.setTitle(postRequest.getTitle());
-////                b.setCreationTimestamp(post.getCreationTimestamp()); Do we need these? Will hibernate handle it itself?
-////                b.setUpdateTimestamp();
-//                    b.setBlurb(postRequest.getBlurb());
-//                    b.setFulltext(postRequest.getFullText());
-//                    b.setImagelink(postRequest.getImageLink());
-//                    b.setTags(postRequest.getTags());
-
-        BlogPost blogPost = blogPostRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));
-        return postMapper.maptToDto(blogPost);
-
-    }
+//       // blogPostRepository.findById(id)
+//
+////                .map(b -> {b.setTitle(postRequest.getTitle());
+//////                b.setCreationTimestamp(post.getCreationTimestamp()); Do we need these? Will hibernate handle it itself?
+//////                b.setUpdateTimestamp();
+////                    b.setBlurb(postRequest.getBlurb());
+////                    b.setFulltext(postRequest.getFullText());
+////                    b.setImagelink(postRequest.getImageLink());
+////                    b.setTags(postRequest.getTags());
+//
+//        BlogPost blogPost = blogPostRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));
+//        return postMapper.maptToDto(blogPost);
+//
+//    }
 
     /**
      *     I think we can get rid of getAllById because we can get all by username, which are all unique.
