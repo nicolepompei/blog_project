@@ -23,10 +23,10 @@ public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("zcwSecretKey")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("900000")
+    @Value("${jwt.expiration.time}")
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication){

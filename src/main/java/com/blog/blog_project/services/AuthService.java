@@ -60,7 +60,7 @@ public class AuthService {
     private VerificationTokenRepository verificationTokenRepository;
 
 
-
+    @Transactional
     public ResponseEntity<?> signup (SignupRequest signupRequest) throws ZcwBlogException{
         if(userRepository.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity
@@ -86,6 +86,7 @@ public class AuthService {
         log.info("User Registered Successfully!");
         String token = generateVerificationToken(user);
 
+
         return ResponseEntity.ok(new MessageResponse("User successfully Created!"));
     }
 
@@ -94,6 +95,7 @@ public class AuthService {
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token);
         verificationToken.setUser(user);
+        verificationToken.setExpiryDate(Instant.now().plusMillis(jwtUtils.getJwtExpirationMs()));
 
         verificationTokenRepository.save(verificationToken);
         return token;
@@ -127,7 +129,7 @@ public class AuthService {
                     .build();
     }
 
-    //use this for blog post service
+
     @Transactional
     public User getCurrentUser(){
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder

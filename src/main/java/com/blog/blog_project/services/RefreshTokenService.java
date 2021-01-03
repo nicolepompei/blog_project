@@ -8,12 +8,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
+@Transactional
 public class RefreshTokenService {
 
     @Autowired
