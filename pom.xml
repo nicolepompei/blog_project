@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+<!--        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>-->
     </properties>
 
     <dependencies>
@@ -94,6 +95,11 @@
             <artifactId>spring-security-core</artifactId>
             <version>5.4.2</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mapstruct</groupId>-->
+<!--            <artifactId>mapstruct</artifactId>-->
+<!--            <version>1.3.1.Final</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -101,13 +107,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version> <!-- or newer version -->
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                    <source>1.8</source> <!-- depending on your project -->
+                    <target>1.8</target> <!-- depending on your project -->
+<!--                    <annotationProcessorPaths>-->
+<!--                        <path>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>-->
+<!--                                -->
+<!--                            </artifactId>-->
+<!--                            <version>1.18.8</version>-->
+<!--                        </path>-->
+<!--&lt;!&ndash;                        <path>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <groupId>org.mapstruct</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <artifactId>mapstruct-processor</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <version>1.3.1.Final</version>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </path>&ndash;&gt;-->
+<!--                    </annotationProcessorPaths>-->
                 </configuration>
             </plugin>
         </plugins>

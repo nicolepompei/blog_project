@@ -41,7 +41,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody SignupRequest signupRequest) throws ZcwBlogException {
         authService.signup(signupRequest);
-        return new ResponseEntity<>("User Registration Successful", HttpStatus.CREATED);
+        return new ResponseEntity<>("User Authentication Successful", HttpStatus.CREATED);
     }
 
     /**
