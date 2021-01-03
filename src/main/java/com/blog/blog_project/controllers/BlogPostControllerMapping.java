@@ -1,34 +1,73 @@
 package com.blog.blog_project.controllers;
 
 import com.blog.blog_project.entities.BlogPost;
+import com.blog.blog_project.exceptions.TagNotFoundException;
+import com.blog.blog_project.payload.request.PostRequest;
+import com.blog.blog_project.payload.response.PostResponse;
 import com.blog.blog_project.services.BlogPostService;
+import com.blog.blog_project.services.BlogPostServiceMapping;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.ResponseEntity.status;
+
 @RequestMapping("/posts")
 @RestController
+@AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:8080")
 public class BlogPostControllerMapping {
 
-    private BlogPostService blogPostService;
     @Autowired
-    public BlogPostControllerMapping(BlogPostService blogPostService){
-        this.blogPostService = blogPostService;
+    private BlogPostServiceMapping blogPostService;
+
+//    public BlogPostControllerMapping(BlogPostService blogPostService){
+//        this.blogPostService = blogPostService;
+//    }
+
+    /**
+     * ///////////////////////////////////// CREATE A BLOG POST ///////////////////////////////////////
+     * @param
+     * @return
+     */
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<?> createBlogPost(@RequestBody PostRequest postRequest){
+        blogPostService.createBlogPost(postRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping
-    public ResponseEntity<BlogPost> createBlogPost(@RequestBody BlogPost blogPost){
-        return new ResponseEntity<BlogPost>(blogPostService.createBlogPost(blogPost), HttpStatus.CREATED);
+
+    /**
+     * ///////////////////////////////////// GET A BLOG POST ///////////////////////////////////////
+     * @param
+     * @return
+     */
+
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<PostResponse> getPost(@PathVariable Long id){
+        return status(HttpStatus.OK).body(blogPostService.getPost(id));
     }
+
+    /**
+     * ///////////////////////////////////// GET ALL BLOG POSTS ///////////////////////////////////////
+     * @param
+     * @return
+     */
     @GetMapping
-    public ResponseEntity<Iterable<BlogPost>> getAll(){
-        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAll(), HttpStatus.OK);
+    public ResponseEntity<Iterable<PostResponse>> getAllPosts(){
+        return status(HttpStatus.OK).body(blogPostService.getAllPosts());
     }
 
+    /**
+     * ///////////////////////////////////// GET ALL BLOG POSTS BY TAG ///////////////////////////////////////
+     * @param
+     * @return
+     */
     @GetMapping("/{tag}")
-    public ResponseEntity<Iterable<BlogPost>> getAllByTag(@PathVariable String tag){
-        return new ResponseEntity<>(blogPostService.getAllByTag(tag), HttpStatus.OK);
+    public ResponseEntity<Iterable<PostResponse>> getAllByTag(@PathVariable String tag) throws TagNotFoundException {
+        return status(HttpStatus.OK).body(blogPostService.getAllByTag(tag));
     }
 
 //    @GetMapping("/id/{id}")
@@ -36,7 +75,11 @@ public class BlogPostControllerMapping {
 //        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllById(id), HttpStatus.OK);
 //    }
 
-
+    /**
+     * ///////////////////////////////////// DELETE POST BY ID ///////////////////////////////////////
+     * @param
+     * @return
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id){
@@ -45,15 +88,24 @@ public class BlogPostControllerMapping {
     }
 
 
-
+    /**
+     * ///////////////////////////////////// UPDATE POSTS BY USERNAME ///////////////////////////////////////
+     * @param
+     * @return
+     */
     @PutMapping("/id/{id}")
-    public ResponseEntity<BlogPost> updateBlogPost(@PathVariable Long id, @RequestBody BlogPost blogPost){
-        return new ResponseEntity<BlogPost>(blogPostService.updateBlogPost(blogPost, id),HttpStatus.OK);
+    public ResponseEntity<PostResponse> updateBlogPost(@PathVariable Long id, @RequestBody PostRequest postRequest){
+        return status(HttpStatus.OK).body(blogPostService.updateBlogPost(postRequest, id));
     }
 
+    /**
+     * ///////////////////////////////////// GET ALL BLOG POSTS BY USERNAME ///////////////////////////////////////
+     * @param
+     * @return
+     */
 
     @GetMapping("/blog/userName/{userName}")
-    public ResponseEntity<Iterable<BlogPost>> getAllByUserName(@PathVariable String userName){
-        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.findAllByUsername(userName), HttpStatus.OK);
+    public ResponseEntity<Iterable<PostResponse>> getAllByUserName(@PathVariable String userName){
+        return status(HttpStatus.OK).body(blogPostService.findAllByUsername(userName));
     }
 }
