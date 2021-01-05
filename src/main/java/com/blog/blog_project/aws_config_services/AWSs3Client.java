@@ -47,7 +47,7 @@ public class AWSs3Client {
 
 
     @PostConstruct
-    public void initAws() {
+    public void init() {
         AWSCredentials awsCredentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
         this.s3Client = AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
