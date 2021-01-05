@@ -72,8 +72,9 @@ public class BlogPostController {
         });
         return errors;
     }
-//    @GetMapping("/blog/userName/{userName}")
-//    public ResponseEntity<Iterable<BlogPost>> getAllByUserName(@PathVariable String userName){
-//        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllByUserName(userName), HttpStatus.OK);
-//    }
+
+    @GetMapping("/blog/userName/{userName}")
+    public ResponseEntity<Iterable<BlogPost>> getAllByUserName(@PathVariable String userName){
+        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.findAllByUsername(userName), HttpStatus.OK);
+    }
 }

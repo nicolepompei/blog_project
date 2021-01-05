@@ -64,8 +64,9 @@ public class BlogPostService {
     public List<BlogPost> getAllById(Long userID){
         return blogPostRepository.findByUser_Id(userID);
     }
-    //TODO In case we want to allow users to search by username
-//    public List<BlogPost> findAllByUsername(String username){
-//        return blogPostRepository.findAllByUsername(username);
-//    }
+
+
+    public List<BlogPost> findAllByUsername(String username){
+        return blogPostRepository.findAllByUsername(username);
+    }
 }
