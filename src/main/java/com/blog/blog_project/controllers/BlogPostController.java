@@ -57,6 +57,8 @@ public class BlogPostController {
         return new ResponseEntity<BlogPost>(blogPostService.updateBlogPost(blogPost, id),HttpStatus.OK);
     }
 
+
+
     //--------------------------Validation error handling----------------------------
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
