@@ -17,13 +17,17 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "TAGS")
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "TAG_NAME")
     @NotBlank
     private String tagName;
+
+    @Column(name = "POST_ID")
+    private Long postId;
 
     @ManyToMany//(mappedBy = "tags")
     //@JsonBackReference // see comment in BlogPost
