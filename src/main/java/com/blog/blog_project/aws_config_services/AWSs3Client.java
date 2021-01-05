@@ -47,7 +47,7 @@ public class AWSs3Client {
 
 
     @PostConstruct
-    private void initAws() {
+    public void initAws() {
         AWSCredentials awsCredentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
         this.s3Client = AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
@@ -55,9 +55,10 @@ public class AWSs3Client {
                 .build();
     }
 
-    //Split into multiple helper methods
+    //converts the multipart file into a java.io.File object
+    //TODO Need a check method to restrict file types accepted
     private File convertMultipartToFile(MultipartFile file) throws IOException {
-        //Look at turning into optional.
+        //Look at using optional to avoid possible null pointer.
         Optional<MultipartFile> optionalFile = Optional.ofNullable(file);
 
 //            File newFile = new File(optionalFile.orElseThrow(IOException::new).getOriginalFilename());
@@ -76,6 +77,7 @@ public class AWSs3Client {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
+    //Generates filename from a timestamp and the original filename
     private String generateFileName(MultipartFile multiPart) {
         return new Date().getTime() + "-" + multiPart.getOriginalFilename()
                 .replace(" ", "_");
@@ -87,10 +89,12 @@ public class AWSs3Client {
         try{
             File file = convertMultipartToFile(multipartFile);
             String fileName = generateFileName(multipartFile);
-            fileUrl = endpointURL + fileName;
+            fileUrl = endpointURL + "/" + bucketName + "/" + fileName;
+            uploadToS3(fileName, file);
+            file.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return fileUrl;
     }
 }
