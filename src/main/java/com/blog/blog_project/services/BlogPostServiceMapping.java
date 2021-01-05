@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +50,7 @@ public class BlogPostServiceMapping {
     public PostResponse getPost(Long id) throws ZcwBlogPostNotFoundException{
         BlogPost post = blogPostRepository.findById(id)
                 .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
-        return postMapper.maptToDto(post);
+        return postMapper.mapToDto(post);
     }
 
     /**
@@ -62,7 +60,7 @@ public class BlogPostServiceMapping {
     public List<PostResponse> getAllPosts(){
         return blogPostRepository.findAll()
                 .stream()
-                .map(postMapper::maptToDto)
+                .map(postMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
@@ -76,7 +74,7 @@ public class BlogPostServiceMapping {
 
         List<BlogPost> posts = blogPostRepository.findByTags_tagName(tagName);
                 return posts.stream()
-                        .map(postMapper::maptToDto)
+                        .map(postMapper::mapToDto)
                         .collect(Collectors.toList());
     }
 
@@ -153,7 +151,7 @@ public class BlogPostServiceMapping {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
         return blogPostRepository.findAllByUsername(user.getUsername())
                 .stream()
-                .map(postMapper::maptToDto)
+                .map(postMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 }

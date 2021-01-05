@@ -17,6 +17,8 @@ import java.util.Set;
 @Component
 public class  PostMapper {
 
+
+
     public BlogPost map(PostRequest postRequest, User user){
         if (postRequest == null && user == null){
             return null;
@@ -38,7 +40,7 @@ public class  PostMapper {
         return blogPost.build();
     }
 
-    public PostResponse maptToDto(BlogPost blogPost){
+    public PostResponse mapToDto(BlogPost blogPost){
         if(blogPost ==  null){
             return null;
         }

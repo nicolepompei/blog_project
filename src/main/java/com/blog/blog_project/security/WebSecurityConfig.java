@@ -41,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * The implementation of UserDetailsService will be used for configuring DaoAuthenticationProvider by
      * AuthentictionManagerBuilder.userDetailsService() method
+     *
+     * Essenially configure AuthenticationManagerBuilder to use the UserDetailsService interface t check for user information
      */
 
     @Override
@@ -48,6 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder.userDetailsService(userDetailsService);
     }
 
+    /**
+     *  Defined a bean for AUthenticationManager
+     * @return
+     * @throws Exception
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception{

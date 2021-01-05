@@ -15,10 +15,10 @@ import java.util.Set;
 import static javax.persistence.FetchType.LAZY;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Table(name = "BLOG_POSTS")
 public class BlogPost {
     @Id
@@ -43,6 +43,7 @@ public class BlogPost {
     @Column(name = "FULLTEXT")
     private String fulltext;
 
+    //this does not need to be here
     @Column(name = "USERNAME")
     private String username;
 
@@ -64,4 +65,6 @@ public class BlogPost {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
+
+
 }
