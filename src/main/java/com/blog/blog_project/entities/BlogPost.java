@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -20,20 +21,32 @@ public class BlogPost {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BLOGPOST_ID")
     private Long id;
+
     @Column(name = "TITLE")
+    @NotBlank
     private String title;
+
     @CreationTimestamp
     @Column(name = "TIMESTAMP")
     private LocalDateTime creationTimestamp;
+
     @UpdateTimestamp
     @Column(name = "UPDATETIMESTAMP")
     private LocalDateTime updateTimestamp;
+
     @Column(name = "BLURB")
+    @NotBlank
     private String blurb;
-    @Column(name = "FULLTEXT")
+
+    @Column(name = "FULLTEXT", columnDefinition = "CLOB NOT NULL")
+    @Lob
+    @NotBlank
     private String fulltext;
+
     @Column(name = "USERNAME")
+    @NotBlank
     private String username;
+
     @Column(name = "IMAGELINK")
     private String imagelink;
 

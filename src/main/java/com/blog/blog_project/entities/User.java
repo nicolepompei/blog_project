@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +24,16 @@ public class User {
     @Column(name = "USER_ID")
     private Long id;
     @Column(name = "USERNAME", unique = true)
-//    @NotBlank(message = "Username is required")
+    @NotBlank(message = "Username is required")
     private String username;
 
     @Column(name = "PASSWORD")
-//    @NotBlank(message = "Password is required")
+    @NotBlank(message = "Password is required")
     private String password;
 
     @Column(name = "EMAIL", unique = true)
-//    @Email
-//    @NotEmpty(message = "Email is required")
+    @Email
+    @NotBlank(message = "Email is required")
     private String email;
 
     @CreationTimestamp

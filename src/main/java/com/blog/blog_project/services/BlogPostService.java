@@ -68,5 +68,4 @@ public class BlogPostService {
 //    public List<BlogPost> findAllByUsername(String username){
 //        return blogPostRepository.findAllByUsername(username);
 //    }
-
 }
