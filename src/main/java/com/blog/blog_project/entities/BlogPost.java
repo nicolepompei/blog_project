@@ -2,28 +2,31 @@ package com.blog.blog_project.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
+@Table(name = "BLOG_POSTS")
 public class BlogPost {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BLOGPOST_ID")
     private Long id;
 
     @Column(name = "TITLE")
-    @NotBlank
     private String title;
 
     @CreationTimestamp
@@ -35,20 +38,17 @@ public class BlogPost {
     private LocalDateTime updateTimestamp;
 
     @Column(name = "BLURB")
-    @NotBlank
     private String blurb;
 
-    @Column(name = "FULLTEXT", columnDefinition = "CLOB NOT NULL")
-    @Lob
-    @NotBlank
+    @Column(name = "FULLTEXT")
     private String fulltext;
 
     @Column(name = "USERNAME")
-    @NotBlank
     private String username;
 
     @Column(name = "IMAGELINK")
     private String imagelink;
+
 
     //This is throwing error "com.fasterxml.jackson.databind.JsonMappingException: Infinite recursion"
     //That is why we must include "JsonManagedReference"
@@ -56,11 +56,12 @@ public class BlogPost {
     @ManyToMany
     @JoinTable(name="BLOGPOST_TAG",
             joinColumns = @JoinColumn(name = "BLOG_ID", referencedColumnName = "BLOGPOST_ID"),
-    inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "id"))
+   inverseJoinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "id"))
     //@JsonManagedReference
     @JsonIgnoreProperties("blogPosts")
     private Set<Tag> tags;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
 }
