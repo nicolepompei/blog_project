@@ -43,9 +43,6 @@ public class BlogPost {
     @Column(name = "FULLTEXT")
     private String fulltext;
 
-    //this does not need to be here
-    @Column(name = "USERNAME")
-    private String username;
 
     @Column(name = "IMAGELINK")
     private String imagelink;

@@ -33,7 +33,7 @@ public class  PostMapper {
             blogPost.fulltext(postRequest.getFulltext());
             blogPost.tags(postRequest.getTags());
             blogPost.imagelink(postRequest.getImagelink());
-            blogPost.username(postRequest.getUsername());
+           // blogPost.username(postRequest.getUsername());
         }
         blogPost.user(user);
         blogPost.creationTimestamp(LocalDateTime.now());

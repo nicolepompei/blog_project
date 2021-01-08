@@ -52,7 +52,7 @@ public class BlogPostService {
     public PostResponse getPost(Long id) throws ZcwBlogPostNotFoundException{
         BlogPost post = blogPostRepository.findById(id)
                 .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
-        return postMapper.maptToDto(post);
+        return postMapper.mapToDto(post);
     }
 
     /**
@@ -62,7 +62,7 @@ public class BlogPostService {
     public List<PostResponse> getAllPosts(){
         return blogPostRepository.findAll()
                 .stream()
-                .map(postMapper::maptToDto)
+                .map(postMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
@@ -76,7 +76,7 @@ public class BlogPostService {
 
         List<BlogPost> posts = blogPostRepository.findByTags_tagName(tagName);
                 return posts.stream()
-                        .map(postMapper::maptToDto)
+                        .map(postMapper::mapToDto)
                         .collect(Collectors.toList());
     }
 
@@ -153,7 +153,7 @@ public class BlogPostService {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
         return blogPostRepository.findAllByUsername(user.getUsername())
                 .stream()
-                .map(postMapper::maptToDto)
+                .map(postMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 }
