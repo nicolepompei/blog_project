@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "TAG_NAME")
+    @NotBlank
     private String tagName;
 
     @Column(name = "POST_ID")
