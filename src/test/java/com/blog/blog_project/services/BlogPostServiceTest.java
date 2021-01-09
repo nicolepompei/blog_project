@@ -22,7 +22,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class BlogPostServiceTest {
@@ -59,6 +62,24 @@ class BlogPostServiceTest {
 
         Assertions.assertThat(actualPostResponse.getId()).isEqualTo(expectedPostResponse.getId());
         Assertions.assertThat(actualPostResponse.getTitle()).isEqualTo(expectedPostResponse.getTitle());
+
+    }
+
+    @Test
+    @DisplayName("Find all blog posts by id")
+    public void shouldFindAllPostsById(){
+        BlogPost post1 = new BlogPost(1L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", new HashSet<>(), null);
+        BlogPost post2 = new BlogPost(2L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", new HashSet<>(), null);
+
+        PostResponse expectedPostResponse1 = new PostResponse(1L, "pompy", "Myy blog post", "www.image.com", "blurb", "full text", new HashSet<>());
+        PostResponse expectedPostResponse2 = new PostResponse(2L, "pompy", "Myy blog post", "www.image.com", "blurb", "full text", new HashSet<>());
+
+        List<PostResponse> expectedPostResponses = mock(List.class);
+
+        expectedPostResponses.add(expectedPostResponse1);
+        expectedPostResponses.add(expectedPostResponse2);
+
+        Mockito.when(blogPostRepository.findAll()).thenReturn(expectedPostResponses);
 
     }
 
