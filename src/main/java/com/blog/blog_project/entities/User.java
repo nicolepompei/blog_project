@@ -53,4 +53,5 @@ public class User {
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
    // @Column(name = "POSTS")
     private List<BlogPost> blogPosts = new ArrayList<>();
+
 }

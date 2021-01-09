@@ -24,9 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     UserRepository userRepository;
 
     /**
-     * Get a full User object via userRepositroy, then build a UserDetails object spring security,
-     * this would change to custom implementation of userDetailsImpl and the static build method if there was
-     * custom information per user like different user roles (ie Admin, Moderator, User)
+     * This class overrides the loadUserByUnser() method which is used by Spring Security to fetch the user details. Inside the
+     * method, query the UserReposstory to fetch the user details and wrapping them in another User object that implements the
+     * UserDetails interface
      */
     @Override
     @Transactional(readOnly = true)

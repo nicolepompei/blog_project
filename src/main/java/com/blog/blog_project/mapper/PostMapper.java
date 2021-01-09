@@ -17,6 +17,8 @@ import java.util.Set;
 @Component
 public class  PostMapper {
 
+
+
     public BlogPost map(PostRequest postRequest, User user){
         if (postRequest == null && user == null){
             return null;
@@ -31,14 +33,14 @@ public class  PostMapper {
             blogPost.fulltext(postRequest.getFulltext());
             blogPost.tags(postRequest.getTags());
             blogPost.imagelink(postRequest.getImagelink());
-            blogPost.username(postRequest.getUsername());
+           // blogPost.username(postRequest.getUsername());
         }
         blogPost.user(user);
         blogPost.creationTimestamp(LocalDateTime.now());
         return blogPost.build();
     }
 
-    public PostResponse maptToDto(BlogPost blogPost){
+    public PostResponse mapToDto(BlogPost blogPost){
         if(blogPost ==  null){
             return null;
         }

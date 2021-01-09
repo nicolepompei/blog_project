@@ -9,17 +9,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Table(name = "BLOG_POSTS")
 public class BlogPost {
     @Id
@@ -28,7 +27,6 @@ public class BlogPost {
     private Long id;
 
     @Column(name = "TITLE")
-    @NotBlank
     private String title;
 
     @CreationTimestamp
@@ -40,17 +38,11 @@ public class BlogPost {
     private LocalDateTime updateTimestamp;
 
     @Column(name = "BLURB")
-    @NotBlank
     private String blurb;
 
-    @Column(name = "FULLTEXT", columnDefinition = "CLOB NOT NULL")
-    @Lob
-    @NotBlank
+    @Column(name = "FULLTEXT")
     private String fulltext;
 
-    @Column(name = "USERNAME")
-    @NotBlank
-    private String username;
 
     @Column(name = "IMAGELINK")
     private String imagelink;
@@ -70,4 +62,6 @@ public class BlogPost {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
+
+
 }
