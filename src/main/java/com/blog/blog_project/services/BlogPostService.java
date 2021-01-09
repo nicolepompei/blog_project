@@ -148,10 +148,10 @@ public class BlogPostService {
 //    }
 
 
-    public List<PostResponse> findAllByUsername(String username){
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
-        return blogPostRepository.findAllByUsername(user.getUsername())
+    public List<PostResponse> findAllByUsername(String currentUserUsername){
+        User user = userRepository.findByUsername(currentUserUsername)
+                .orElseThrow(() -> new UsernameNotFoundException(currentUserUsername));
+        return blogPostRepository.findAllByUser(authService.getCurrentUser().getUsername())
                 .stream()
                 .map(postMapper::mapToDto)
                 .collect(Collectors.toList());

@@ -13,5 +13,5 @@ public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
     public List<BlogPost> findByTags_tagName(String tagName);
 
-    public List<BlogPost> findAllByUsername(String Username);
+    public List<BlogPost> findAllByUser(String Username);
 }
