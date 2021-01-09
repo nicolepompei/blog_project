@@ -1,5 +1,6 @@
 package com.blog.blog_project.controllers;
 
+import com.blog.blog_project.entities.User;
 import com.blog.blog_project.exceptions.TagNotFoundException;
 import com.blog.blog_project.payload.request.PostRequest;
 import com.blog.blog_project.payload.response.PostResponse;
@@ -103,7 +104,7 @@ public class BlogPostController {
      */
 
     @GetMapping("/blog/userName/{userName}")
-    public ResponseEntity<Iterable<PostResponse>> getAllByUserName(@PathVariable String userName){
-        return status(HttpStatus.OK).body(blogPostService.findAllByUsername(userName));
+    public ResponseEntity<Iterable<PostResponse>> getAllByUserName(@PathVariable String currentUserUsername){
+        return status(HttpStatus.OK).body(blogPostService.findAllByUsername(currentUserUsername));
     }
 }
