@@ -7,16 +7,14 @@ import com.blog.blog_project.payload.request.LoginRequest;
 import com.blog.blog_project.payload.request.RefreshTokenRequest;
 import com.blog.blog_project.payload.request.SignupRequest;
 import com.blog.blog_project.payload.response.AuthenticationResponse;
-import com.blog.blog_project.payload.response.JwtResponse;
 import com.blog.blog_project.payload.response.MessageResponse;
 import com.blog.blog_project.repositories.UserRepository;
 import com.blog.blog_project.repositories.VerificationTokenRepository;
 import com.blog.blog_project.security.jwt.JwtUtils;
-import com.blog.blog_project.security.services.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,13 +25,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
-
-import static org.springframework.http.ResponseEntity.*;
 
 @Service
 @Transactional
@@ -90,6 +83,7 @@ public class AuthService {
         return ResponseEntity.ok(new MessageResponse("User successfully Created!"));
     }
 
+    @VisibleForTesting // has to be package private, too
     private String generateVerificationToken(User user) {
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken();
