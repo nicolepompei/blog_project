@@ -1,7 +1,6 @@
 package com.blog.blog_project.repositories;
 
 import com.blog.blog_project.entities.BlogPost;
-import com.blog.blog_project.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +13,5 @@ public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
     public List<BlogPost> findByTags_tagName(String tagName);
 
-    public List<BlogPost> findAllByUser(String username);
+    public List<BlogPost> findAllByUser(String Username);
 }

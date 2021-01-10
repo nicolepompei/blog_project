@@ -149,7 +149,7 @@ public class BlogPostService {
 
 
     public List<PostResponse> findAllByUsername(String currentUserUsername){
-        User user = userRepository.findByUsername(authService.getCurrentUser().getUsername())
+        User user = userRepository.findByUsername(currentUserUsername)
                 .orElseThrow(() -> new UsernameNotFoundException(currentUserUsername));
         return blogPostRepository.findAllByUser(authService.getCurrentUser().getUsername())
                 .stream()

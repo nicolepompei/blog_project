@@ -65,6 +65,7 @@ class BlogPostServiceTest {
 
     }
 
+    //WIP
 //    @Test
 //    @DisplayName("Find all blog posts by id")
 //    public void shouldFindAllPostsById(){
