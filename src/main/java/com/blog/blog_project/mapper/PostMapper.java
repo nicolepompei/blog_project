@@ -35,7 +35,8 @@ public class  PostMapper {
             blogPost.imagelink(postRequest.getImagelink());
            // blogPost.username(postRequest.getUsername());
         }
-        blogPost.user(user);
+
+       // blogPost.username(user.getUsername());
         blogPost.creationTimestamp(LocalDateTime.now());
         return blogPost.build();
     }

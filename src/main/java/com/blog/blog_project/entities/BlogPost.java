@@ -47,6 +47,9 @@ public class BlogPost {
     @Column(name = "IMAGELINK")
     private String imagelink;
 
+    @Column(name = "USERNAME")
+    private String username;
+
 
     //This is throwing error "com.fasterxml.jackson.databind.JsonMappingException: Infinite recursion"
     //That is why we must include "JsonManagedReference"

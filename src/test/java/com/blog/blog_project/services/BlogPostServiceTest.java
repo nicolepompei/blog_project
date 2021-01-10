@@ -52,7 +52,7 @@ class BlogPostServiceTest {
     @DisplayName("Find a blog post by an id")
     public void shouldFindPostById(){
 
-        BlogPost post = new BlogPost(12L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", new HashSet<>(), null);
+        BlogPost post = new BlogPost(12L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), null);
         PostResponse expectedPostResponse = new PostResponse(12L, "pompy", "Myy blog post", "www.image.com", "blurb", "full text", new HashSet<>());
 
         Mockito.when(blogPostRepository.findById(12L)).thenReturn(Optional.of(post));
@@ -89,8 +89,8 @@ class BlogPostServiceTest {
     @DisplayName("Create and save a blog post")
     public void shouldCreateAndSavePost(){
         User currentUser = new User(1234L, "pompy", "password", "pompy@email.com", LocalDateTime.now(), new ArrayList<>());
-        BlogPost post = new BlogPost(12L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", new HashSet<>(), null);
-        PostRequest postRequest = new PostRequest(12L, "pompy", "Myy blog post", "blurb","full text", "wwww.image.com", new HashSet<>());
+        BlogPost post = new BlogPost(12L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), null);
+        PostRequest postRequest = new PostRequest(12L, "Myy blog post", "blurb","full text", "wwww.image.com", "pompy", new HashSet<>());
 
         Mockito.when(authService.getCurrentUser()).thenReturn(currentUser);
 //        Mockito.when(blogPostRepository.findById(12L)).thenReturn(Optional.of(post));
