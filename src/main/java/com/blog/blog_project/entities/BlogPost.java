@@ -63,5 +63,12 @@ public class BlogPost {
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
 
+    public BlogPost(String title, String blurb, String fulltext, String imglink){
+        this.title=title;
+        this.blurb=blurb;
+        this.fulltext=fulltext;
+        this.imagelink=imglink;
+    }
+
 
 }

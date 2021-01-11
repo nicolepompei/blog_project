@@ -8,6 +8,7 @@ import com.blog.blog_project.services.BlogPostService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,8 +55,10 @@ public class BlogPostController {
      * @param
      * @return
      */
-    @GetMapping
-    public ResponseEntity<Iterable<PostResponse>> getAllPosts(){
+    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
+            method = RequestMethod.GET)
+
+    public @ResponseBody ResponseEntity<Iterable<PostResponse>> getAllPosts(){
         return status(HttpStatus.OK).body(blogPostService.getAllPosts());
     }
 
