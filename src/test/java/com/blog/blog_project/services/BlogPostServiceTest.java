@@ -18,8 +18,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,7 +36,6 @@ class BlogPostServiceTest {
     @Captor
     private ArgumentCaptor<BlogPost> postArgumentCaptor;
 
-    @InjectMocks
     private BlogPostService blogPostService;
 
     @BeforeEach
@@ -69,7 +70,6 @@ class BlogPostServiceTest {
         BlogPost post1 = new BlogPost(1L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), pompy);
         BlogPost post2 = new BlogPost(2L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), pompy);
 
-
         doReturn(Arrays.asList(post1, post2)).when(blogPostRepository).findAll();
         List<PostResponse> actual = blogPostService.getAllPosts();
 
@@ -77,38 +77,43 @@ class BlogPostServiceTest {
 
     }
 
-
-    @Test
-    @DisplayName("Find all blog posts by username")
-    public void shouldFindAllPostsByUsername(){
-        User pompy = new User(1L, "pompy", "password", "pompy@gmail.com", LocalDateTime.now(), new ArrayList<>());
-        BlogPost post1 = new BlogPost(1L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), pompy);
-        BlogPost post2 = new BlogPost(2L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), pompy);
-
-        PostResponse expectedPostResponse1 = new PostResponse(1L, "pompy", "Myy blog post", "www.image.com", "blurb", "full text", new HashSet<>());
-        PostResponse expectedPostResponse2 = new PostResponse(2L, "pompy", "Myy blog post", "www.image.com", "blurb", "full text", new HashSet<>());
-
-        BlogPost[] posts = {post1, post2};
-
-       // List<BlogPost> expectedPostResponses = Arrays.asList(posts);
-
-        blogPostService.findAllByUsername("pompy");
-
-        //verify(blogPostRepository, Mockito.times(1)).findAllByUsername(postArgumentCaptor.capture().getUsername());
-
-       // Mockito.when(blogPostRepository.findAllByUsername(post1.getUsername())).thenReturn(expectedPostResponses);
-
-//        Assertions.assertThat(postArgumentCaptor.getValue().getUsername()).isEqualTo("pompy");
-//        Assertions.assertThat(postArgumentCaptor.getAllValues()).isEqualTo(expectedPostResponses);
-
-        when(blogPostRepository.findAllByUsername("pompy")).thenReturn(Arrays.asList(posts));
-
-        List<PostResponse> actual = blogPostService.findAllByUsername(pompy.getUsername());
-
-        assertEquals(post1, actual.get(0));
-        verify(blogPostRepository).findAllByUsername(pompy.getUsername());
-
-    }
+    //WIP
+//    @Test
+//    @DisplayName("Find all blog posts by username")
+//    public void shouldFindAllPostsByUsername(){
+//        User pompy = new User(1L, "pompy", "password", "pompy@gmail.com", LocalDateTime.now(), new ArrayList<>());
+//
+//        BlogPost post1 = new BlogPost(1L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), null);
+//        BlogPost post2 = new BlogPost(2L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), null);
+//
+//        PostResponse expectedPostResponse1 = new PostResponse(1L, "pompy", "Myy blog post", "wwww.image.com", "blurb", "full text", new HashSet<>());
+//        PostResponse expectedPostResponse2 = new PostResponse(2L, "pompy", "Myy blog post", "wwww.image.com", "blurb", "full text", new HashSet<>());
+//
+//       lenient().doReturn(Arrays.asList(post1, post2)).when(blogPostRepository).findAllByUsername(pompy.getUsername());
+//        List<PostResponse> expected = blogPostService.findAllByUsername(authService.getCurrentUser().getUsername());
+//
+//        Assertions.assertThat(expected.size()).isEqualTo(2);
+//
+//
+//
+////        pompy.setBlogPosts(new ArrayList<>(Arrays.asList(post1, post2)));
+////        given(blogPostRepository.findAllByUsername("pompy")).willReturn(Optional.of(pompy.getBlogPosts()));
+////
+////
+////        List<BlogPost> expectedPosts = Arrays.asList(post1, post2);
+////
+////        List<PostResponse> actualPosts = blogPostService.findAllByUsername("pompy");
+////
+////        doReturn(Arrays.asList(post1, post2)).when(blogPostRepository).findAllByUsername("pompy");
+////
+////        Mockito.when(blogPostService.findAllByUsername("pompy")).thenReturn(Arrays.asList(expectedPostResponse1, expectedPostResponse2));
+////        Integer expected = 2;
+////
+////        Integer actual = blogPostService.findAllByUsername("pompy").size();
+////
+////        assertEquals(expected, actual);
+//
+//    }
 
 
     @Test
