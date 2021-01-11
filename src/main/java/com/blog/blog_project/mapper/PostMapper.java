@@ -33,7 +33,7 @@ public class  PostMapper {
             blogPost.fulltext(postRequest.getFulltext());
             blogPost.tags(postRequest.getTags());
             blogPost.imagelink(postRequest.getImagelink());
-           // blogPost.username(postRequest.getUsername());
+            blogPost.username(postRequest.getUsername());
         }
 
        // blogPost.username(user.getUsername());
@@ -47,9 +47,8 @@ public class  PostMapper {
         }
 
         PostResponse postResponse = new PostResponse();
-
         postResponse.setId(blogPost.getId());
-        postResponse.setUserName(postUserUsername(blogPost));
+        postResponse.setUserName(blogPost.getUsername());
         postResponse.setTitle(blogPost.getTitle());
         postResponse.setBlurb(blogPost.getBlurb());
         postResponse.setFullText(blogPost.getFulltext());

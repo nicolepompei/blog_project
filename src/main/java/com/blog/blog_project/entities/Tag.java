@@ -29,7 +29,7 @@ public class Tag {
     @Column(name = "POST_ID")
     private Long postId;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany
     //@JsonBackReference // see comment in BlogPost
     @JsonIgnoreProperties("tags")
     private Set<BlogPost> blogPosts = new HashSet<>();
