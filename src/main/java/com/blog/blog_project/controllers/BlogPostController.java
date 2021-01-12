@@ -17,7 +17,7 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("/posts")
 @RestController
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:8080")
+// @CrossOrigin(origins = "http://localhost:4200")
 public class BlogPostController {
 
     @Autowired
