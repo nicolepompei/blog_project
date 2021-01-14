@@ -91,6 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/signin").permitAll()
                 .antMatchers(HttpMethod.GET,"/posts").permitAll()
                 .antMatchers(HttpMethod.GET,"/posts/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/image/uploadS3").permitAll()
+                //.antMatchers(HttpMethod.POST, "/posts").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

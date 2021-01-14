@@ -32,8 +32,9 @@ public class BlogPostController {
      * @param
      * @return
      */
-    @PostMapping(consumes = "application/json")
+    @PostMapping//(consumes = "application/json")
     public ResponseEntity<?> createBlogPost(@RequestBody PostRequest postRequest){
+        System.out.println("BPController called");
         blogPostService.createBlogPost(postRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
