@@ -46,7 +46,7 @@ public class BlogPostController {
      * @return
      */
 
-    @GetMapping("/posts/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long id){
         return status(HttpStatus.OK).body(blogPostService.getPost(id));
     }
@@ -66,7 +66,7 @@ public class BlogPostController {
      * @param
      * @return
      */
-    @GetMapping("/{tag}")
+    @GetMapping("/tags/{tag}")
     public ResponseEntity<Iterable<PostResponse>> getAllByTag(@PathVariable String tag) throws TagNotFoundException {
         return status(HttpStatus.OK).body(blogPostService.getAllByTag(tag));
     }
