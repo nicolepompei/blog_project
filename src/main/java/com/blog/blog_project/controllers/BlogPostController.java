@@ -33,8 +33,9 @@ public class BlogPostController {
      * @param
      * @return
      */
-    @PostMapping(consumes = "application/json")
+    @PostMapping//(consumes = "application/json")
     public ResponseEntity<?> createBlogPost(@RequestBody PostRequest postRequest){
+        System.out.println("BPController called");
         blogPostService.createBlogPost(postRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -46,7 +47,7 @@ public class BlogPostController {
      * @return
      */
 
-    @GetMapping("/posts/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long id){
         return status(HttpStatus.OK).body(blogPostService.getPost(id));
     }
@@ -68,7 +69,7 @@ public class BlogPostController {
      * @param
      * @return
      */
-    @GetMapping("/{tag}")
+    @GetMapping("/tags/{tag}")
     public ResponseEntity<Iterable<PostResponse>> getAllByTag(@PathVariable String tag) throws TagNotFoundException {
         return status(HttpStatus.OK).body(blogPostService.getAllByTag(tag));
     }

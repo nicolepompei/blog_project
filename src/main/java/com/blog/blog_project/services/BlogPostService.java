@@ -97,12 +97,15 @@ public class BlogPostService {
      */
 
     public void createBlogPost(PostRequest postRequest){
+        //something needs to be done about this
+        if (postRequest.getTags() != null) {
 
-        for (Tag t : postRequest.getTags()) {
-            if (tagRepository.existsByTagName(t.getTagName())) {
-                t.setId(tagRepository.findByTagName(t.getTagName()).getId());
+            for (Tag t : postRequest.getTags()) {
+                if (tagRepository.existsByTagName(t.getTagName())) {
+                    t.setId(tagRepository.findByTagName(t.getTagName()).getId());
+                }
+                tagRepository.save(t);
             }
-            tagRepository.save(t);
         }
 
 

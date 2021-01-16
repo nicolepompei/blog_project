@@ -40,7 +40,8 @@ public class BlogPost {
     @Column(name = "BLURB")
     private String blurb;
 
-    @Column(name = "FULLTEXT")
+    @Lob
+    @Column(name = "FULLTEXT", length = 666000)
     private String fulltext;
 
 
