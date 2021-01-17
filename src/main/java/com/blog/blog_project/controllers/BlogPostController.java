@@ -108,7 +108,7 @@ public class BlogPostController {
      */
 
     @GetMapping("/blog/userName/{userName}")
-    public ResponseEntity<Iterable<PostResponse>> getAllByuserName(@PathVariable String userName){
+    public ResponseEntity<Iterable<PostResponse>> getAllByUserName(@PathVariable String userName){
         return status(HttpStatus.OK).body(blogPostService.findAllByUsername(userName));
     }
 }
