@@ -72,13 +72,11 @@ public class AuthService {
         user.setUsername((signupRequest.getUsername()));
         user.setEmail((signupRequest.getEmail()));
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-        //user.setTimestamp(new LocalDateTime()); dont think this is needed
 
         userRepository.save(user);
 
         log.info("User Registered Successfully!");
         String token = generateVerificationToken(user);
-
 
         return ResponseEntity.ok(new MessageResponse("User successfully Created!"));
     }

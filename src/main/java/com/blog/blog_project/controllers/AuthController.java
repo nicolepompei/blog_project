@@ -11,6 +11,7 @@ import com.blog.blog_project.repositories.UserRepository;
 import com.blog.blog_project.security.jwt.JwtUtils;
 import com.blog.blog_project.services.AuthService;
 import com.blog.blog_project.services.RefreshTokenService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import javax.validation.Valid;
 
 // @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@Slf4j
 @RequestMapping("/api/auth")
 public class AuthController {
 

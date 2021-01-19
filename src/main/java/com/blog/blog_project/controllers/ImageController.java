@@ -27,11 +27,6 @@ public class ImageController {
         this.s3Client = s3Client;
     }
 
-    //Experiments
-    @PostMapping("/upload/local")
-    public void uploadLocal(@RequestParam("file")MultipartFile file) {
-        imageUploadService.uploadToLocal(file);
-    }
 
     @PostMapping("/uploadS3")
     public ResponseEntity<String> uploadFileToS3(@RequestParam(value= "image")MultipartFile file) {

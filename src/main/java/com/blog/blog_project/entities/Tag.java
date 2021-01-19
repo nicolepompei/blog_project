@@ -30,7 +30,6 @@ public class Tag {
     private Long postId;
 
     @ManyToMany
-    //@JsonBackReference // see comment in BlogPost
     @JsonIgnoreProperties("tags")
     private Set<BlogPost> blogPosts = new HashSet<>();
 }

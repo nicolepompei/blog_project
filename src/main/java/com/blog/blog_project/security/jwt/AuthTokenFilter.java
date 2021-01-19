@@ -52,7 +52,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         try{
             String jwt = parseJwt(request);
-            //trying this from SO
+
             if(CorsUtils.isPreFlightRequest(request)){
                 response.setStatus(HttpServletResponse.SC_OK);
             }

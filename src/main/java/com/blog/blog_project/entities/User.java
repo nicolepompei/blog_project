@@ -51,7 +51,6 @@ public class User {
                 joinColumns = @JoinColumn(name = "USER_ID"),
                 inverseJoinColumns = @JoinColumn(name = "BLOGPOST_ID"))
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
-   // @Column(name = "POSTS")
     private List<BlogPost> blogPosts = new ArrayList<>();
 
 }

@@ -23,16 +23,12 @@ public class BlogPostController {
     @Autowired
     private BlogPostService blogPostService;
 
-//    public BlogPostControllerMapping(BlogPostService blogPostService){
-//        this.blogPostService = blogPostService;
-//    }
-
     /**
      * ///////////////////////////////////// CREATE A BLOG POST ///////////////////////////////////////
      * @param
      * @return
      */
-    @PostMapping//(consumes = "application/json")
+    @PostMapping
     public ResponseEntity<?> createBlogPost(@RequestBody PostRequest postRequest){
         System.out.println("BPController called");
         blogPostService.createBlogPost(postRequest);
@@ -71,32 +67,7 @@ public class BlogPostController {
         return status(HttpStatus.OK).body(blogPostService.getAllByTag(tag));
     }
 
-//    @GetMapping("/id/{id}")
-//    public ResponseEntity<Iterable<BlogPost>> getAllById(@PathVariable Long id){
-//        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllById(id), HttpStatus.OK);
-//    }
 
-    /**
-     * ///////////////////////////////////// DELETE POST BY ID ///////////////////////////////////////
-     * @param
-     * @return
-     */
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
-        blogPostService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-
-    /**
-     * ///////////////////////////////////// UPDATE POSTS BY USERNAME ///////////////////////////////////////
-     * Commenting this out for now as it is not apart of the MVP.
-     */
-//    @PutMapping("/id/{id}")
-//    public ResponseEntity<PostResponse> updateBlogPost(@PathVariable Long id, @RequestBody PostRequest postRequest){
-//        return status(HttpStatus.OK).body(blogPostService.updateBlogPost(postRequest, id));
-//    }
 
     /**
      * ///////////////////////////////////// GET ALL BLOG POSTS BY USERNAME ///////////////////////////////////////
