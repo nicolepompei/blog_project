@@ -57,11 +57,13 @@ public class AuthController {
      */
     @PostMapping("/signin")
     public AuthenticationResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ZcwBlogException{
+        log.info("user signin controller executing: user signed in");
        return authService.login(loginRequest);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
+        log.info("user logout controller executing: user logged out");
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return new ResponseEntity<>("Refresh Token Deleted Successfully!", HttpStatus.OK);
     }
@@ -69,6 +71,7 @@ public class AuthController {
 
     @PostMapping("/refresh/token")
     public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws  ZcwBlogException {
+        log.info("refresh tokens controller executing: token refreshed");
         return authService.refreshToken(refreshTokenRequest);
     }
 
