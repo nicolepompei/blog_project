@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,15 +17,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "TAGS")
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "TAG_NAME")
+    @NotBlank
     private String tagName;
 
-    @ManyToMany//(mappedBy = "tags")
-    //@JsonBackReference // see comment in BlogPost
+    @Column(name = "POST_ID")
+    private Long postId;
+
+    @ManyToMany
     @JsonIgnoreProperties("tags")
     private Set<BlogPost> blogPosts = new HashSet<>();
 }
