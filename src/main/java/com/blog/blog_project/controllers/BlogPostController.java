@@ -7,9 +7,9 @@ import com.blog.blog_project.payload.response.PostResponse;
 //import com.blog.blog_project.services.BlogPostService;
 import com.blog.blog_project.services.BlogPostService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,24 +18,21 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("/posts")
 @RestController
 @AllArgsConstructor
+@Slf4j
 // @CrossOrigin(origins = "http://localhost:4200")
 public class BlogPostController {
 
     @Autowired
     private BlogPostService blogPostService;
 
-//    public BlogPostControllerMapping(BlogPostService blogPostService){
-//        this.blogPostService = blogPostService;
-//    }
-
     /**
      * ///////////////////////////////////// CREATE A BLOG POST ///////////////////////////////////////
      * @param
      * @return
      */
-    @PostMapping//(consumes = "application/json")
+    @PostMapping
     public ResponseEntity<?> createBlogPost(@RequestBody PostRequest postRequest){
-        System.out.println("BPController called");
+        log.info("Create blog post controller executing");
         blogPostService.createBlogPost(postRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -49,6 +46,7 @@ public class BlogPostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long id){
+        log.info("get post by ID controller called");
         return status(HttpStatus.OK).body(blogPostService.getPost(id));
     }
 
@@ -57,10 +55,9 @@ public class BlogPostController {
      * @param
      * @return
      */
-    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE,
-            method = RequestMethod.GET)
-
-    public @ResponseBody ResponseEntity<Iterable<PostResponse>> getAllPosts(){
+    @GetMapping
+    public ResponseEntity<Iterable<PostResponse>> getAllPosts(){
+        log.info("get all posts controller executed: getting all posts");
         return status(HttpStatus.OK).body(blogPostService.getAllPosts());
     }
 
@@ -71,35 +68,11 @@ public class BlogPostController {
      */
     @GetMapping("/tags/{tag}")
     public ResponseEntity<Iterable<PostResponse>> getAllByTag(@PathVariable String tag) throws TagNotFoundException {
+        log.info("get all posts by tag executed: getting all posts by tag");
         return status(HttpStatus.OK).body(blogPostService.getAllByTag(tag));
     }
 
-//    @GetMapping("/id/{id}")
-//    public ResponseEntity<Iterable<BlogPost>> getAllById(@PathVariable Long id){
-//        return new ResponseEntity<Iterable<BlogPost>>(blogPostService.getAllById(id), HttpStatus.OK);
-//    }
 
-    /**
-     * ///////////////////////////////////// DELETE POST BY ID ///////////////////////////////////////
-     * @param
-     * @return
-     */
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
-        blogPostService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-
-    /**
-     * ///////////////////////////////////// UPDATE POSTS BY USERNAME ///////////////////////////////////////
-     * Commenting this out for now as it is not apart of the MVP.
-     */
-//    @PutMapping("/id/{id}")
-//    public ResponseEntity<PostResponse> updateBlogPost(@PathVariable Long id, @RequestBody PostRequest postRequest){
-//        return status(HttpStatus.OK).body(blogPostService.updateBlogPost(postRequest, id));
-//    }
 
     /**
      * ///////////////////////////////////// GET ALL BLOG POSTS BY USERNAME ///////////////////////////////////////
@@ -108,7 +81,8 @@ public class BlogPostController {
      */
 
     @GetMapping("/blog/userName/{userName}")
-    public ResponseEntity<Iterable<PostResponse>> getAllByUserName(@PathVariable String userName){
+    public ResponseEntity<Iterable<PostResponse>> getAllByuserName(@PathVariable String userName){
+        log.info("get all posts by username exectued: getting all posts");
         return status(HttpStatus.OK).body(blogPostService.findAllByUsername(userName));
     }
 }

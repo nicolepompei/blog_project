@@ -37,7 +37,7 @@ public class  PostMapper {
             blogPost.username(postRequest.getUsername());
         }
 
-       // blogPost.username(user.getUsername());
+
         blogPost.creationTimestamp(LocalDateTime.now());
         return blogPost.build();
     }
@@ -60,22 +60,4 @@ public class  PostMapper {
         return postResponse;
     }
 
-
-    private String postUserUsername(BlogPost blogPost){
-        if(blogPost == null){
-            return null;
-        }
-
-        User user = blogPost.getUser();
-        if( user == null){
-            return null;
-        }
-
-        String username = user.getUsername();
-        if(username == null){
-            return null;
-        }
-
-        return username;
-    }
 }

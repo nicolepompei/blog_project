@@ -50,6 +50,7 @@ public class BlogPostService {
      */
     @Transactional(readOnly = true)
     public PostResponse getPost(Long id) throws ZcwBlogPostNotFoundException{
+        log.info("getPost called");
         BlogPost post = blogPostRepository.findById(id)
                 .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
         return postMapper.mapToDto(post);
@@ -60,6 +61,7 @@ public class BlogPostService {
      */
     @Transactional(readOnly = true)
     public List<PostResponse> getAllPosts(){
+        log.info("getAllPosts called");
         return blogPostRepository.findAll()
                 .stream()
                 .map(postMapper::mapToDto)
@@ -71,6 +73,7 @@ public class BlogPostService {
      */
     @Transactional(readOnly = true)
     public List<PostResponse> getAllByTag(String tagName) throws TagNotFoundException {
+        log.info("getAllByTag called");
         Tag tag = tagRepository.findById(tagRepository.findByTagName(tagName).getId())
                 .orElseThrow(()-> new TagNotFoundException((tagRepository.findByTagName(tagName).getId().toString())));
 
@@ -78,13 +81,6 @@ public class BlogPostService {
                 return posts.stream()
                         .map(postMapper::mapToDto)
                         .collect(Collectors.toList());
-    }
-
-    /**
-     * /////////////////////////////////////  DELETE A POST BY ID ////////////////////////////////////////
-     */
-    public void deleteById(Long id){
-        blogPostRepository.deleteById(id);
     }
 
 
@@ -97,7 +93,7 @@ public class BlogPostService {
      */
 
     public void createBlogPost(PostRequest postRequest){
-        //something needs to be done about this
+        log.info("createBlogPost called");
         if (postRequest.getTags() != null) {
 
             for (Tag t : postRequest.getTags()) {
@@ -107,51 +103,18 @@ public class BlogPostService {
                 tagRepository.save(t);
             }
         }
-
-
         blogPostRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));
     }
 
-    /**
-     * ///////////////////////////////////// UPDATE A POST ////////////////////////////////////////
-     *
-     *  figure out how to map this to go from a BlogPost Request to a Blog Post Response
-     *   when you're updating a post, you've already clicked on it therefore you've gotten it by its id already, so now you're updating the contents
-     *   of THAT specific post
-     *
-     *   COMMENTING OUT FOR NOW AS IT IS NOT PART OF THE MVP
-     */
-
-//    public PostResponse updateBlogPost(PostRequest postRequest){
-////        BlogPost blogPostToUpdate = blogPostRepository.findById(id)
-////                .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
-////
-////        return postMapper.maptToDto(postRequest, blogPostToUpdate);
-//
-//       // blogPostRepository.findById(id)
-//
-////                .map(b -> {b.setTitle(postRequest.getTitle());
-//////                b.setCreationTimestamp(post.getCreationTimestamp()); Do we need these? Will hibernate handle it itself?
-//////                b.setUpdateTimestamp();
-////                    b.setBlurb(postRequest.getBlurb());
-////                    b.setFulltext(postRequest.getFullText());
-////                    b.setImagelink(postRequest.getImageLink());
-////                    b.setTags(postRequest.getTags());
-//
-//        BlogPost blogPost = blogPostRepository.save(postMapper.map(postRequest, authService.getCurrentUser()));
-//        return postMapper.maptToDto(blogPost);
-//
-//    }
 
     /**
-     *     I think we can get rid of getAllById because we can get all by username, which are all unique.
+     * ////////////////////////////////// FIND ALL BY USERNAME ////////////////////////////////////////////////////////
+     * @param currentUserUsername
+     * @return
      */
-    //    public List<BlogPost> getAllById(Long userID){
-//        return blogPostRepository.findByUser_Id(userID);
-//    }
-
 
     public List<PostResponse> findAllByUsername(String currentUserUsername){
+        log.info("findAllByUsername called");
         User user = userRepository.findByUsername(currentUserUsername)
                 .orElseThrow(() -> new UsernameNotFoundException(currentUserUsername));
         return blogPostRepository.findAllByUsername(authService.getCurrentUser().getUsername())

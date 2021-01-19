@@ -11,6 +11,7 @@ import com.blog.blog_project.repositories.UserRepository;
 import com.blog.blog_project.security.jwt.JwtUtils;
 import com.blog.blog_project.services.AuthService;
 import com.blog.blog_project.services.RefreshTokenService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import javax.validation.Valid;
 
 // @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@Slf4j
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -55,11 +57,13 @@ public class AuthController {
      */
     @PostMapping("/signin")
     public AuthenticationResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ZcwBlogException{
+        log.info("user signin controller executing: user signed in");
        return authService.login(loginRequest);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
+        log.info("user logout controller executing: user logged out");
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return new ResponseEntity<>("Refresh Token Deleted Successfully!", HttpStatus.OK);
     }
@@ -67,6 +71,7 @@ public class AuthController {
 
     @PostMapping("/refresh/token")
     public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws  ZcwBlogException {
+        log.info("refresh tokens controller executing: token refreshed");
         return authService.refreshToken(refreshTokenRequest);
     }
 

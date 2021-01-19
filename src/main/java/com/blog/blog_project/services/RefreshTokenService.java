@@ -24,14 +24,16 @@ public class RefreshTokenService {
     private RefreshTokenRepository refreshTokenRepository;
 
     RefreshToken generateRefreshToken(){
+        log.info("generateRefreshToken called");
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(UUID.randomUUID().toString());
-       refreshToken.setCreatedDate(Instant.now());
+        refreshToken.setCreatedDate(Instant.now());
 
         return refreshTokenRepository.save(refreshToken);
     }
 
     public void validateRefreshToken(String token) throws ZcwBlogException {
+        log.info("validateRefreshToken called");
         refreshTokenRepository.findByToken(token)
                 .orElseThrow(() -> new ZcwBlogException("Invalid Refresh Token"));
     }

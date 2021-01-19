@@ -56,12 +56,7 @@ public class AWSs3Client {
     }
 
     //converts the multipart file into a java.io.File object
-    //TODO Need a check method to restrict file types accepted
     private File convertMultipartToFile(MultipartFile file) throws IOException {
-        //Look at using optional to avoid possible null pointer.
-        Optional<MultipartFile> optionalFile = Optional.ofNullable(file);
-
-//            File newFile = new File(optionalFile.orElseThrow(IOException::new).getOriginalFilename());
         assert file != null; //?Necessary?
         File newFile = new File(file.getOriginalFilename());
             FileOutputStream output = new FileOutputStream(newFile);

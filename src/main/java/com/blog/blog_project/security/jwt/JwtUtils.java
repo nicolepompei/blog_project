@@ -56,8 +56,6 @@ public class JwtUtils {
                 .getBody();
 
         return claims.getSubject();
-
-//        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
     public int getJwtExpirationMs(){

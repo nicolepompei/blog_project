@@ -24,6 +24,4 @@ public class RefreshToken {
     private String token;
 
     private Instant createdDate;
-//    @CreationTimestamp
-//    private LocalDateTime createdDate;
 }
