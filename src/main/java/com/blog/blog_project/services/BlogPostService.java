@@ -50,6 +50,7 @@ public class BlogPostService {
      */
     @Transactional(readOnly = true)
     public PostResponse getPost(Long id) throws ZcwBlogPostNotFoundException{
+        log.info("getPost called");
         BlogPost post = blogPostRepository.findById(id)
                 .orElseThrow(() -> new ZcwBlogPostNotFoundException(id.toString()));
         return postMapper.mapToDto(post);
@@ -60,6 +61,7 @@ public class BlogPostService {
      */
     @Transactional(readOnly = true)
     public List<PostResponse> getAllPosts(){
+        log.info("getAllPosts called");
         return blogPostRepository.findAll()
                 .stream()
                 .map(postMapper::mapToDto)
@@ -71,6 +73,7 @@ public class BlogPostService {
      */
     @Transactional(readOnly = true)
     public List<PostResponse> getAllByTag(String tagName) throws TagNotFoundException {
+        log.info("getAllByTag called");
         Tag tag = tagRepository.findById(tagRepository.findByTagName(tagName).getId())
                 .orElseThrow(()-> new TagNotFoundException((tagRepository.findByTagName(tagName).getId().toString())));
 
@@ -90,6 +93,7 @@ public class BlogPostService {
      */
 
     public void createBlogPost(PostRequest postRequest){
+        log.info("createBlogPost called");
         if (postRequest.getTags() != null) {
 
             for (Tag t : postRequest.getTags()) {
@@ -110,6 +114,7 @@ public class BlogPostService {
      */
 
     public List<PostResponse> findAllByUsername(String currentUserUsername){
+        log.info("findAllByUsername called");
         User user = userRepository.findByUsername(currentUserUsername)
                 .orElseThrow(() -> new UsernameNotFoundException(currentUserUsername));
         return blogPostRepository.findAllByUsername(authService.getCurrentUser().getUsername())

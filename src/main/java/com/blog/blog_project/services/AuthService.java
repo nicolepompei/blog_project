@@ -55,7 +55,9 @@ public class AuthService {
 
     @Transactional
     public ResponseEntity<?> signup (SignupRequest signupRequest) throws ZcwBlogException{
+        log.info("AuthService: signup called");
         if(userRepository.existsByUsername(signupRequest.getUsername())){
+            log.info(String.format("AuthService: Error: Username %s taken", signupRequest.getUsername()));
             return ResponseEntity
                     .badRequest()
                     .body((new MessageResponse("Error: Username is already taken!")));
@@ -63,6 +65,7 @@ public class AuthService {
         }
 
         if(userRepository.existsByEmail(signupRequest.getEmail())){
+            log.info(String.format("AuthService: Error: Email address %s already in use", signupRequest.getEmail()));
             return ResponseEntity
                     .badRequest()
                     .body(((new MessageResponse("Error: Email is already in use!"))));
@@ -75,7 +78,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        log.info("User Registered Successfully!");
+        log.info("AuthService: User Registered Successfully!");
         String token = generateVerificationToken(user);
 
         return ResponseEntity.ok(new MessageResponse("User successfully Created!"));
@@ -83,6 +86,7 @@ public class AuthService {
 
     @VisibleForTesting // has to be package private, too
     private String generateVerificationToken(User user) {
+        log.info(String.format("AuthService: generateVerificationToken called for user %s", user.getUsername()));
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token);
@@ -90,17 +94,19 @@ public class AuthService {
         verificationToken.setExpiryDate(Instant.now().plusMillis(jwtUtils.getJwtExpirationMs()));
 
         verificationTokenRepository.save(verificationToken);
+        log.info("AuthService: Token generated successfully");
         return token;
     }
 
     public AuthenticationResponse login(LoginRequest loginRequest) throws ZcwBlogException {
+        log.info("AuthService: login called");
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                 loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = jwtUtils.generateJwtToken(authenticate);
-        log.info("User login successful!");
+        log.info("AuthService: User login successful!");
         return AuthenticationResponse.builder()
                     .authenticationToken(token)
                     .refreshToken(refreshTokenService.generateRefreshToken().getToken())
@@ -110,9 +116,10 @@ public class AuthService {
     }
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
+        log.info("AuthService: refereshToken called");
         refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
         String token = jwtUtils.generateTokenWithUserName(refreshTokenRequest.getUsername());
-        log.info("refresh token successfully generated");
+        log.info("AuthService: refresh token successfully generated");
             return AuthenticationResponse.builder()
                     .authenticationToken(token)
                     .refreshToken(refreshTokenRequest.getRefreshToken())
@@ -125,6 +132,7 @@ public class AuthService {
 
     @Transactional
     public User getCurrentUser(){
+        log.info("AuthService: getCurrentUser called");
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                  .getContext().getAuthentication().getPrincipal();
         return userRepository.findByUsername(principal.getUsername())
