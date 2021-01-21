@@ -5,6 +5,7 @@ retrieval of images for blog posts.
 <br>
 User registration and authentication functionality is handled with JSONWebToken and the Bearer scheme. 
 <br>
+<br>
 Users are able to register an account, log in, view all blog posts, view their specific blog posts, search for posts by tag, click tag side bar to view all posts
 associated to a specific tag, create a blog post with an image, and log out. 
 <br>
