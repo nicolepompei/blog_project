@@ -2,6 +2,7 @@
 The design is MVC REST combined with the Builder pattern built with the Spring Boot framework with a MySQL database. Amazon S3 configuration handles upload and
 retrieval of images for blog posts. 
 <br>
+<br>
 User registration and authentication functionality is handled with JSONWebToken and the Bearer scheme. 
 <br>
 Users are able to register an account, log in, view all blog posts, view their specific blog posts, search for posts by tag, click tag side bar to view all posts
