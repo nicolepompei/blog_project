@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,17 +59,13 @@ public class AuthService {
         log.info("AuthService: signup called");
         if(userRepository.existsByUsername(signupRequest.getUsername())){
             log.info(String.format("AuthService: Error: Username %s taken", signupRequest.getUsername()));
-            return ResponseEntity
-                    .badRequest()
-                    .body((new MessageResponse("Error: Username is already taken!")));
 
+            return new ResponseEntity<>("Error: Username is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         if(userRepository.existsByEmail(signupRequest.getEmail())){
             log.info(String.format("AuthService: Error: Email address %s already in use", signupRequest.getEmail()));
-            return ResponseEntity
-                    .badRequest()
-                    .body(((new MessageResponse("Error: Email is already in use!"))));
+            return new ResponseEntity<>("Error: Username is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         User user = new User();

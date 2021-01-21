@@ -34,5 +34,6 @@ public class ImageController {
     public ResponseEntity<String> uploadFileToS3(@RequestParam(value= "image")MultipartFile file) {
         log.info("upload to S3 controller executing: image uploading");
         return new ResponseEntity<>(s3Client.uploadFile(file), HttpStatus.ACCEPTED);
+
     }
 }

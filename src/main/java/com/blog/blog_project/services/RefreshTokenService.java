@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,9 +39,10 @@ public class RefreshTokenService {
                 .orElseThrow(() -> new ZcwBlogException("Invalid Refresh Token"));
     }
 
-    public void deleteRefreshToken(String token){
+    public ResponseEntity<?> deleteRefreshToken(String token) throws ZcwBlogException {
         log.info("Refresh token successfully deleted. User logged out!");
-        refreshTokenRepository.deleteByToken(token);
+       return refreshTokenRepository.deleteByToken(token)
+               .orElseThrow(() -> new ZcwBlogException("Invalid Refresh Token; token cannot be deleted"));
 
     }
 }

@@ -41,9 +41,8 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody SignupRequest signupRequest) throws ZcwBlogException {
-        authService.signup(signupRequest);
-        return new ResponseEntity<>("User Authentication Successful", HttpStatus.CREATED);
+    public ResponseEntity<?> signUp(@RequestBody SignupRequest signupRequest) throws ZcwBlogException {
+      return  authService.signup(signupRequest);
     }
 
     /**
@@ -62,7 +61,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
+    public ResponseEntity<?> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) throws ZcwBlogException{
         log.info("user logout controller executing: user logged out");
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return new ResponseEntity<>("Refresh Token Deleted Successfully!", HttpStatus.OK);
