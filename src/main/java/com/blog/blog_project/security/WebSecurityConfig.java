@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/signup").permitAll()
                 .antMatchers("/api/auth/signin").permitAll()
                 .antMatchers("/api/auth/refresh/token").permitAll()
-                .antMatchers("api/auth/logout").permitAll()
+                .antMatchers("/api/auth/logout").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/auth/refresh/token").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/auth/logout").permitAll()
                 .antMatchers(HttpMethod.GET,"/posts").permitAll()

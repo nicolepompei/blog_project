@@ -9,6 +9,7 @@ import com.blog.blog_project.payload.response.PostResponse;
 import com.blog.blog_project.repositories.BlogPostRepository;
 import com.blog.blog_project.repositories.TagRepository;
 import com.blog.blog_project.repositories.UserRepository;
+import com.blog.blog_project.security.services.UserDetailsServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,10 +17,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
@@ -34,14 +42,16 @@ class BlogPostServiceTest {
     @Mock private AuthService authService;
     @Mock private PostMapper postMapper;
 
+
     @Captor
     private ArgumentCaptor<BlogPost> postArgumentCaptor;
-
+    @Autowired
     private BlogPostService blogPostService;
 
     @BeforeEach
     public void setup(){
         blogPostService = new BlogPostService(blogPostRepository, tagRepository, userRepository, authService, postMapper);
+
     }
 
 
@@ -78,26 +88,17 @@ class BlogPostServiceTest {
 
     }
 
-    //WIP
-//    @Test
-//    @DisplayName("Find all blog posts by username")
-//    public void shouldFindAllPostsByUsername(){
-//        User pompy = new User(1L, "pompy", "password", "pompy@gmail.com", LocalDateTime.now(), new ArrayList<>());
-//        String username = "pompy";
-//
-//        BlogPost post1 = new BlogPost(1L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), null);
-//        BlogPost post2 = new BlogPost(2L, "Myy blog post", LocalDateTime.now(), LocalDateTime.now(), "blurb", "full text", "wwww.image.com", "pompy", new HashSet<>(), null);
-//
-//        PostResponse expectedPostResponse1 = new PostResponse(1L, "pompy", "Myy blog post", "wwww.image.com", "blurb", "full text", new HashSet<>());
-//        PostResponse expectedPostResponse2 = new PostResponse(2L, "pompy", "Myy blog post", "wwww.image.com", "blurb", "full text", new HashSet<>());
-//
-//       Mockito.when(blogPostService.findAllByUsername(username)).thenReturn((Arrays.asList(expectedPostResponse1, expectedPostResponse2)));
-//       Integer expected = 2;
-//       List<PostResponse> actual = blogPostService.findAllByUsername(username);
-//
-//        Assertions.assertThat(actual.size()).isEqualTo(expected);
-//
-//    }
+
+    @Test
+    @DisplayName("Find all blog posts by username")
+    public void shouldFindAllPostsByUsername(){
+        User currentUser = mock(User.class);
+
+       Mockito.when(userRepository.findByUsername(any())).thenReturn(Optional.of(currentUser));
+       blogPostService.findAllByUsername(currentUser.getUsername());
+
+        Mockito.verify(blogPostRepository, times(1)).findAllByUsername(currentUser.getUsername());
+    }
 
 
     @Test
