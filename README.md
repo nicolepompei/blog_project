@@ -1,5 +1,5 @@
 # blrb - Full Stack Blog Application Backend
-Backend Tech Stack includes Java 1.8, Maven, Hibernate JPA, SpringBoot, MySQL, Amazon S3, JUnit5, and Mockito.
+Backend Tech Stack includes Java 1.8, Maven, Hibernate JPA, SpringBoot, Lombok, MySQL, Amazon S3, JUnit5, Mockito, custom error handling, and Slf4j for logging.
 <br>
 The design is MVC REST combined with the Builder pattern for a flexible design to allow for product updates. Amazon S3 configuration handles upload and
 retrieval of images for blog posts. 
