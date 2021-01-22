@@ -3,6 +3,7 @@ package com.blog.blog_project.security.services;
 import com.blog.blog_project.entities.User;
 import com.blog.blog_project.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.assertj.core.util.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * UserDetails interface
      */
     @Override
+    @VisibleForTesting
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.findByUsername(username);

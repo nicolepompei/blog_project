@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
@@ -62,6 +63,7 @@ public class BlogPost {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private User user;
+
 
 
 }
