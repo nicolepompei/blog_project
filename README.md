@@ -13,5 +13,8 @@ associated to a specific tag, create a blog post with an image, and log out.
 The application is deployed to Heroku with a MySQL database instance hosted via Amazon RDS. 
 <br>
 <br>
+JUnit5 and Mockito frameworks were used for testing. 
+<br>
+<br>
 Check out the app here!
 <a href="https://blog-project-frontend.herokuapp.com/home">blrb</a>
