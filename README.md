@@ -1,5 +1,7 @@
 # blrb - Full Stack Blog Application Backend
-The design is MVC REST combined with the Builder pattern built with the Spring Boot framework with a MySQL database. Amazon S3 configuration handles upload and
+Backend Tech Stack includes Java 1.8, Maven, Hibernate JPA, SpringBoot, MySQL, Amazon S3, JUnit5, and Mockito.
+<br>
+The design is MVC REST combined with the Builder pattern for a flexible design to allow for product updates. Amazon S3 configuration handles upload and
 retrieval of images for blog posts. 
 <br>
 <br>
