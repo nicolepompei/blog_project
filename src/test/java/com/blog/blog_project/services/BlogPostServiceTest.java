@@ -95,7 +95,7 @@ class BlogPostServiceTest {
         User currentUser = mock(User.class);
 
        Mockito.when(userRepository.findByUsername(any())).thenReturn(Optional.of(currentUser));
-        blogPostService.findAllByUsername(currentUser.getUsername());
+       blogPostService.findAllByUsername(currentUser.getUsername());
 
         Mockito.verify(blogPostRepository, times(1)).findAllByUsername(currentUser.getUsername());
     }

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the UserDetails interface because we need to get more data
  */
+
 public class UserDetailsImpl  implements UserDetails {
 
     private static final long serialVersionUID = 1L;
