@@ -11,8 +11,7 @@ retrieval of images for blog posts.
 <br>
 <br>
 User registration and authentication functionality is handled with JSONWebToken and the Bearer scheme. 
-<br>
-<br>
+
 ## Endpoints<br>
 `/signup` Register a new account. POST request. Returns a 201 response for a unique account and a 400 response for a duplicate account.<br>
 `/login` Login for an existing user. POST request. Returns a 200 response for a successful login and a 400 for a bad request (incorrect credentials).<br>
