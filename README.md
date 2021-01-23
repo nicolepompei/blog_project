@@ -1,7 +1,6 @@
 # blrb - Full Stack Blog Application Backend
 ## Check out the app here! <a href="https://blog-project-frontend.herokuapp.com/home">blrb</a><br>
-<br>
-<br>
+
 ## Backend Tech Stack includes:<br>
 Java 1.8, Maven, Hibernate JPA, SpringBoot, Lombok, MySQL, Amazon S3, JUnit5, Mockito, custom error handling, and Slf4j for logging.
 <br>
@@ -27,8 +26,7 @@ The application is deployed to Heroku with a MySQL database instance hosted via 
 <br>
 <br>
 JUnit5 and Mockito frameworks were used for testing. 
-<br>
-<br>
+
 ## Future Feature Roadmap:
 Update User Details<br>
 Update Post<br>
