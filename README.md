@@ -29,4 +29,12 @@ The application is deployed to Heroku with a MySQL database instance hosted via 
 JUnit5 and Mockito frameworks were used for testing. 
 <br>
 <br>
-
+<strong>Future Feature Roadmap:</strong><br>
+Update User Details<br>
+Update Post<br>
+Delete Post<br>
+Add comments<br>
+Edit comments<br>
+Delete comments<br>
+Like and Dislike Posts<br>
+Homepage ranking based on most popular posts<br>
