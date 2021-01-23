@@ -1,8 +1,9 @@
 # blrb - Full Stack Blog Application Backend
-Check out the app here! <a href="https://blog-project-frontend.herokuapp.com/home">blrb</a><br>
+## Check out the app here! <a href="https://blog-project-frontend.herokuapp.com/home">blrb</a><br>
 <br>
 <br>
-Backend Tech Stack includes Java 1.8, Maven, Hibernate JPA, SpringBoot, Lombok, MySQL, Amazon S3, JUnit5, Mockito, custom error handling, and Slf4j for logging.
+## Backend Tech Stack includes:<br>
+Java 1.8, Maven, Hibernate JPA, SpringBoot, Lombok, MySQL, Amazon S3, JUnit5, Mockito, custom error handling, and Slf4j for logging.
 <br>
 <br>
 The design is MVC REST combined with the Builder pattern for a flexible design to allow for product updates. Amazon S3 configuration handles upload and
@@ -12,7 +13,7 @@ retrieval of images for blog posts.
 User registration and authentication functionality is handled with JSONWebToken and the Bearer scheme. 
 <br>
 <br>
-<strong>Endpoints</strong><br>
+## Endpoints<br>
 `/signup` Register a new account. POST request. Returns a 201 response for a unique account and a 400 response for a duplicate account.<br>
 `/login` Login for an existing user. POST request. Returns a 200 response for a successful login and a 400 for a bad request (incorrect credentials).<br>
 `/logout` Logout for a signed in user. POST request. Returns a 201 response for a successful logout.<br>
@@ -29,7 +30,7 @@ The application is deployed to Heroku with a MySQL database instance hosted via 
 JUnit5 and Mockito frameworks were used for testing. 
 <br>
 <br>
-<strong>Future Feature Roadmap:</strong><br>
+## Future Feature Roadmap:
 Update User Details<br>
 Update Post<br>
 Delete Post<br>
